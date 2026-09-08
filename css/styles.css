@@ -1,0 +1,760 @@
+/* styles.css - Vintage CRT TV Set, Chassis, Screen Shaders & Color Themes */
+
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap');
+
+:root {
+  /* Default Cyberpunk Retro Theme */
+  --bg-dark: #0a0b10;
+  --tv-cabinet: #1f1d1a;
+  --tv-cabinet-border: #38342f;
+  --tv-wood-grain: #2d1f14;
+  --tv-wood-border: #4a3524;
+  --tv-bezel: #121316;
+  --screen-bg: #090c12;
+  
+  --primary-accent: #00ffaa;
+  --primary-glow: rgba(0, 255, 170, 0.45);
+  --secondary-accent: #ff0077;
+  --secondary-glow: rgba(255, 0, 119, 0.45);
+  --cyber-blue: #00d9ff;
+  --cyber-yellow: #ffea00;
+  --osd-green: #39ff14;
+  
+  --text-main: #f0f6fc;
+  --text-muted: #8b949e;
+  --border-color: #30363d;
+  --card-bg: rgba(18, 22, 34, 0.85);
+
+  --scanline-color: rgba(18, 16, 16, 0.35);
+  --font-pixel: 'Press Start 2P', monospace;
+  --font-terminal: 'VT323', monospace;
+  --font-sans: 'Space Grotesk', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* Theme: 1980s Amber Monochrome CRT */
+.theme-amber {
+  --primary-accent: #ffb000;
+  --primary-glow: rgba(255, 176, 0, 0.55);
+  --secondary-accent: #ff8c00;
+  --secondary-glow: rgba(255, 140, 0, 0.45);
+  --cyber-blue: #ffd000;
+  --cyber-yellow: #ffe066;
+  --osd-green: #ffb000;
+  --screen-bg: #140d02;
+  --text-main: #ffcc66;
+  --text-muted: #b38033;
+  --card-bg: rgba(36, 22, 5, 0.85);
+  --border-color: #664411;
+}
+
+/* Theme: Matrix Green Phosphor P1 */
+.theme-matrix {
+  --primary-accent: #00ff41;
+  --primary-glow: rgba(0, 255, 65, 0.55);
+  --secondary-accent: #008f11;
+  --secondary-glow: rgba(0, 143, 17, 0.45);
+  --cyber-blue: #55ff77;
+  --cyber-yellow: #aaffaa;
+  --osd-green: #00ff41;
+  --screen-bg: #021204;
+  --text-main: #a8ffb2;
+  --text-muted: #338844;
+  --card-bg: rgba(4, 28, 8, 0.85);
+  --border-color: #0d4d1a;
+}
+
+/* Theme: Classic B&W Vacuum Tube TV */
+.theme-classic-bw {
+  --primary-accent: #e6e6e6;
+  --primary-glow: rgba(230, 230, 230, 0.4);
+  --secondary-accent: #aaaaaa;
+  --secondary-glow: rgba(170, 170, 170, 0.3);
+  --cyber-blue: #cccccc;
+  --cyber-yellow: #ffffff;
+  --osd-green: #e6e6e6;
+  --screen-bg: #0d0d0d;
+  --text-main: #f0f0f0;
+  --text-muted: #888888;
+  --card-bg: rgba(24, 24, 24, 0.9);
+  --border-color: #444444;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  background-image: 
+    radial-gradient(circle at 50% 20%, rgba(20, 30, 45, 0.6) 0%, transparent 70%),
+    linear-gradient(to bottom, #07080b 0%, #0c0f16 100%);
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.5);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary-accent);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--secondary-accent);
+}
+
+/* Page Layout Container */
+.portfolio-stage {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px;
+  position: relative;
+  gap: 36px;
+}
+
+/* VINTAGE TV SET CASING */
+.tv-casing-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1040px;
+  width: 100%;
+  position: relative;
+}
+
+/* Top Dual Antenna */
+.tv-antenna-rig {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 40px;
+  height: 36px;
+  margin-bottom: -6px;
+  z-index: 1;
+}
+
+.antenna-rod {
+  width: 4px;
+  height: 48px;
+  background: linear-gradient(to right, #cfcfcf, #888888, #444444);
+  border-radius: 2px 2px 0 0;
+  position: relative;
+}
+
+.antenna-rod::before {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff 30%, #888888 90%);
+}
+
+.antenna-left {
+  transform: rotate(-32deg);
+  transform-origin: bottom center;
+}
+
+.antenna-right {
+  transform: rotate(32deg);
+  transform-origin: bottom center;
+}
+
+.antenna-base {
+  width: 60px;
+  height: 12px;
+  background: #252422;
+  border-radius: 6px 6px 0 0;
+  border: 1px solid #444;
+  position: absolute;
+  bottom: 0;
+}
+
+/* TV Main Body Chassis */
+.tv-chassis {
+  width: 100%;
+  background: linear-gradient(135deg, var(--tv-wood-grain) 0%, #1a120b 60%, #120c07 100%);
+  border: 8px solid var(--tv-wood-border);
+  border-radius: 28px;
+  box-shadow: 
+    0 24px 60px rgba(0, 0, 0, 0.9),
+    inset 0 2px 4px rgba(255, 255, 255, 0.15),
+    inset 0 -4px 10px rgba(0, 0, 0, 0.8);
+  padding: 24px;
+  display: flex;
+  gap: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+/* Side Brand Badge */
+.tv-brand-plate {
+  position: absolute;
+  top: 10px;
+  left: 36px;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #c5a059;
+  letter-spacing: 2px;
+  text-shadow: 1px 1px 2px #000;
+  border: 1px solid #735422;
+  padding: 3px 8px;
+  background: #19120b;
+  border-radius: 3px;
+}
+
+/* Inner Screen Bezel */
+.tv-screen-bezel {
+  flex: 1;
+  background: var(--tv-bezel);
+  border: 12px solid #1a1c23;
+  border-radius: 24px;
+  padding: 10px;
+  box-shadow: 
+    inset 0 8px 18px rgba(0, 0, 0, 0.95),
+    0 2px 6px rgba(255, 255, 255, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+/* CRT Screen Glass & Viewport */
+.tv-screen-viewport {
+  width: 100%;
+  height: 580px;
+  background-color: var(--screen-bg);
+  border-radius: 20px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.9);
+}
+
+/* CRT Scanlines Overlay */
+.crt-scanlines {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 20;
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.45) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 3px 100%;
+  opacity: 0.85;
+}
+
+/* CRT Glass Glare / Curved Screen Reflection */
+.crt-curvature-glare {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 22;
+  border-radius: 20px;
+  box-shadow: 
+    inset 0 0 45px rgba(0, 0, 0, 0.8),
+    inset 0 4px 15px rgba(255, 255, 255, 0.08);
+  background: radial-gradient(
+    circle at 50% 30%, 
+    rgba(255, 255, 255, 0.04) 0%, 
+    transparent 65%
+  );
+}
+
+/* Canvas Static Noise Overlay */
+#static-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 18;
+  display: none;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.12s linear;
+  image-rendering: pixelated;
+}
+
+/* On-Screen Display (OSD) */
+.tv-osd {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  z-index: 25;
+  font-family: var(--font-terminal);
+  color: var(--osd-green);
+  text-shadow: 0 0 8px var(--osd-green);
+  font-size: 26px;
+  line-height: 1.1;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(-8px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 6px 14px;
+  border: 1px solid var(--osd-green);
+  border-radius: 4px;
+}
+
+.tv-osd.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.osd-ch {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.osd-title {
+  font-size: 22px;
+  letter-spacing: 1px;
+}
+
+.osd-extra {
+  font-size: 16px;
+  opacity: 0.8;
+}
+
+/* TV Screen Content Area */
+.tv-screen-content {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.35s ease;
+}
+
+/* Power OFF / ON Cathode Ray Tube Animation */
+.tv-screen-content.power-off {
+  animation: crtPowerOff 0.42s forwards cubic-bezier(0.77, 0, 0.175, 1);
+}
+
+.tv-screen-content.power-on {
+  animation: crtPowerOn 0.45s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+@keyframes crtPowerOff {
+  0% {
+    transform: scale(1, 1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+  45% {
+    transform: scale(1, 0.003);
+    filter: brightness(5);
+    background: #fff;
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.003, 0.003);
+    filter: brightness(10);
+    background: #fff;
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0, 0);
+    filter: brightness(0);
+    opacity: 0;
+  }
+}
+
+@keyframes crtPowerOn {
+  0% {
+    transform: scale(0, 0);
+    filter: brightness(0);
+    opacity: 0;
+  }
+  35% {
+    transform: scale(0.003, 0.003);
+    filter: brightness(8);
+    background: #fff;
+    opacity: 1;
+  }
+  70% {
+    transform: scale(1, 0.003);
+    filter: brightness(4);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1, 1);
+    filter: brightness(1);
+    opacity: 1;
+  }
+}
+
+/* Turned-off TV state */
+.tv-set.tv-turned-off .tv-screen-viewport {
+  background-color: #030406;
+}
+
+.tv-set.tv-turned-off .channel-panel {
+  display: none !important;
+}
+
+/* PHYSICAL TV CONTROLS PANEL (Right Side of TV) */
+.tv-controls-panel {
+  width: 140px;
+  background: #17181c;
+  border-radius: 16px;
+  border: 2px solid #282a33;
+  padding: 18px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.8);
+}
+
+.dial-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dial-label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: #8c909e;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Rotary Channel Dial */
+.rotary-knob-wrapper {
+  position: relative;
+  width: 74px;
+  height: 74px;
+}
+
+.rotary-knob {
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #383a45 40%, #1c1d22 90%);
+  border-radius: 50%;
+  border: 4px solid #4a4d5a;
+  box-shadow: 
+    0 4px 8px rgba(0, 0, 0, 0.8),
+    inset 0 2px 4px rgba(255, 255, 255, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.rotary-marker {
+  width: 4px;
+  height: 24px;
+  background: var(--primary-accent);
+  box-shadow: 0 0 6px var(--primary-accent);
+  position: absolute;
+  top: 4px;
+  border-radius: 2px;
+}
+
+/* TV Push Buttons */
+.tv-btn-cluster {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.tv-ch-step-row {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.tv-mini-btn {
+  background: #252830;
+  border: 2px solid #3c404d;
+  color: #a0a6b5;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 8px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 3px 0 #15171c, 0 4px 6px rgba(0, 0, 0, 0.6);
+  transition: all 0.1s ease;
+  flex: 1;
+  text-align: center;
+}
+
+.tv-mini-btn:hover {
+  background: #2d303b;
+  color: #fff;
+}
+
+.tv-mini-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #15171c;
+}
+
+.tv-power-switch {
+  background: #a82020;
+  border: 2px solid #d43737;
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 10px 8px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #540e0e, 0 4px 8px rgba(0, 0, 0, 0.6);
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: all 0.1s ease;
+}
+
+.tv-power-switch:hover {
+  background: #c42727;
+}
+
+.tv-power-switch:active {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 #540e0e;
+}
+
+.power-led-dot {
+  width: 6px;
+  height: 6px;
+  background: #ff3b30;
+  border-radius: 50%;
+  box-shadow: 0 0 6px #ff3b30;
+}
+
+.tv-speaker-grill {
+  margin-top: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 6px 0;
+}
+
+.speaker-slit {
+  height: 4px;
+  background: #0a0b0d;
+  border-radius: 2px;
+  box-shadow: inset 0 1px 2px #000;
+}
+
+/* TV Legs / Wooden Base Stand */
+.tv-stand-legs {
+  display: flex;
+  justify-content: space-between;
+  width: 78%;
+  height: 28px;
+  margin-top: -4px;
+}
+
+.tv-leg {
+  width: 42px;
+  height: 100%;
+  background: linear-gradient(to bottom, #2b1c10, #180f08);
+  border: 3px solid #3f2a1a;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.7);
+}
+
+.tv-leg-left {
+  transform: skewX(-14deg);
+}
+
+.tv-leg-right {
+  transform: skewX(14deg);
+}
+
+/* TV GUIDE MODAL (Retro Broadcast Schedule) */
+.tv-guide-modal {
+  position: absolute;
+  inset: 0;
+  background: rgba(8, 10, 15, 0.94);
+  z-index: 30;
+  display: none;
+  flex-direction: column;
+  padding: 24px;
+  overflow-y: auto;
+  backdrop-filter: blur(4px);
+  border: 2px solid var(--primary-accent);
+}
+
+.tv-guide-modal.open {
+  display: flex;
+}
+
+.guide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px dashed var(--primary-accent);
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.guide-title {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--primary-accent);
+  text-shadow: 0 0 8px var(--primary-glow);
+}
+
+.guide-close-btn {
+  background: transparent;
+  border: 1px solid var(--secondary-accent);
+  color: var(--secondary-accent);
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.guide-close-btn:hover {
+  background: var(--secondary-accent);
+  color: #fff;
+}
+
+.guide-channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.guide-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.guide-row:hover, .guide-row.current {
+  background: rgba(0, 255, 170, 0.12);
+  border-color: var(--primary-accent);
+  transform: translateX(4px);
+}
+
+.guide-ch-num {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--primary-accent);
+}
+
+.guide-ch-meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.guide-ch-name {
+  font-family: var(--font-pixel);
+  font-size: 12px;
+  color: #fff;
+}
+
+.guide-ch-desc {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.guide-ch-tune {
+  font-family: var(--font-terminal);
+  font-size: 18px;
+  color: var(--osd-green);
+}
+
+/* General Buttons */
+.pixel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #141721;
+  border: 1px solid var(--primary-accent);
+  color: var(--primary-accent);
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  padding: 8px 14px;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 0 var(--border-color);
+}
+
+.pixel-btn:hover {
+  background: var(--primary-accent);
+  color: #000;
+  box-shadow: 0 0 12px var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+/* Media Queries */
+@media (max-width: 1100px) {
+  .portfolio-stage {
+    flex-direction: column;
+    padding: 16px 12px;
+    gap: 20px;
+  }
+
+  .tv-screen-viewport {
+    height: 520px;
+  }
+}
+
+@media (max-width: 768px) {
+  .tv-chassis {
+    padding: 12px;
+    flex-direction: column;
+    border-width: 6px;
+  }
+
+  .tv-controls-panel {
+    display: none; /* Controls move to remote and touch on mobile */
+  }
+
+  .tv-screen-bezel {
+    border-width: 6px;
+    padding: 4px;
+  }
+
+  .tv-screen-viewport {
+    height: 480px;
+  }
+
+  .tv-brand-plate {
+    left: 18px;
+    font-size: 8px;
+  }
+}

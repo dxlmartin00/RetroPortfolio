@@ -1,0 +1,883 @@
+/* channels.css - Layouts & Aesthetics for All 6 TV Broadcast Channels */
+
+.channel-panel {
+  display: none;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 28px 24px 40px 24px;
+  position: relative;
+}
+
+.channel-panel.active {
+  display: block;
+  animation: channelFadeIn 0.3s ease-out;
+}
+
+@keyframes channelFadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Common Channel Header */
+.channel-header {
+  margin-bottom: 24px;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.channel-tag-pill {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--primary-accent);
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid var(--primary-accent);
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  display: inline-block;
+}
+
+.channel-title {
+  font-family: var(--font-pixel);
+  font-size: 20px;
+  color: #fff;
+  text-shadow: 0 0 10px var(--primary-glow);
+  letter-spacing: 1px;
+}
+
+.channel-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.channel-counter {
+  font-family: var(--font-terminal);
+  font-size: 24px;
+  color: var(--osd-green);
+}
+
+/* ===================================================
+   CHANNEL 01: ABOUT ME / CS FRESH GRAD DOSSIER
+   =================================================== */
+.about-dossier-grid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+.character-card {
+  background: var(--card-bg);
+  border: 2px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+.avatar-frame {
+  width: 130px;
+  height: 130px;
+  border: 3px solid var(--primary-accent);
+  border-radius: 16px;
+  background: #0d1117;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 14px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 15px var(--primary-glow);
+}
+
+.pixel-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  image-rendering: pixelated;
+}
+
+.avatar-corner-deco {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--primary-accent);
+  background: rgba(0, 0, 0, 0.8);
+  padding: 2px 4px;
+  border-radius: 2px;
+}
+
+.dossier-name {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.dossier-handle {
+  font-family: var(--font-terminal);
+  font-size: 18px;
+  color: var(--primary-accent);
+  margin-bottom: 12px;
+}
+
+.rpg-stats-box {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 11px;
+  text-align: left;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-name {
+  color: var(--text-muted);
+  font-family: var(--font-pixel);
+  font-size: 7px;
+}
+
+.stat-val {
+  color: #fff;
+  font-weight: 600;
+}
+
+.stat-bar-container {
+  width: 100%;
+  height: 8px;
+  background: #21262d;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s ease;
+}
+
+.fill-hp {
+  background: #ff3b30;
+  width: 100%;
+}
+.fill-mp {
+  background: var(--cyber-blue);
+  width: 98%;
+}
+.fill-xp {
+  background: var(--primary-accent);
+  width: 95%;
+}
+
+/* About Right Column */
+.dossier-content {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.dossier-bio-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.bio-greeting {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--primary-accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.bio-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #c9d1d9;
+  margin-bottom: 14px;
+}
+
+.bio-badges-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.bio-badge {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+}
+
+.about-metrics-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.metric-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+}
+
+.metric-num {
+  font-family: var(--font-pixel);
+  font-size: 20px;
+  color: var(--primary-accent);
+  text-shadow: 0 0 8px var(--primary-glow);
+  margin-bottom: 4px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+/* ===================================================
+   CHANNEL 02: FEATURED PROJECTS (14 REPOSITORIES)
+   =================================================== */
+.projects-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.filter-pill {
+  background: #161b22;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.filter-pill:hover, .filter-pill.active {
+  background: var(--primary-accent);
+  color: #000;
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.project-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: all 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card:hover, .project-card.focused {
+  border-color: var(--primary-accent);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8), 0 0 12px var(--primary-glow);
+}
+
+.project-card.featured::before {
+  content: '★ FEATURED';
+  position: absolute;
+  top: 10px;
+  right: -24px;
+  background: var(--secondary-accent);
+  color: #fff;
+  font-family: var(--font-pixel);
+  font-size: 6px;
+  padding: 3px 26px;
+  transform: rotate(45deg);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-badge {
+  font-family: var(--font-pixel);
+  font-size: 7px;
+  color: var(--primary-accent);
+  letter-spacing: 0.5px;
+}
+
+.card-lang {
+  font-size: 11px;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.card-icon {
+  font-size: 24px;
+}
+
+.card-title {
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: #fff;
+}
+
+.card-desc {
+  font-size: 13px;
+  color: #8b949e;
+  line-height: 1.5;
+  flex: 1;
+}
+
+.card-highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 11px;
+  color: #abb2bf;
+}
+
+.card-highlights .bullet {
+  color: var(--primary-accent);
+  font-size: 8px;
+}
+
+.card-tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.tech-pill {
+  font-size: 10px;
+  color: var(--primary-accent);
+  background: rgba(0, 255, 170, 0.08);
+  border: 1px solid rgba(0, 255, 170, 0.2);
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.btn-gh {
+  border-color: var(--border-color);
+  color: #fff;
+  flex: 1;
+}
+
+.btn-gh:hover {
+  background: #30363d;
+  color: #fff;
+  border-color: #8b949e;
+}
+
+.btn-live {
+  background: rgba(255, 0, 119, 0.15);
+  border-color: var(--secondary-accent);
+  color: var(--secondary-accent);
+  flex: 1;
+}
+
+.btn-live:hover {
+  background: var(--secondary-accent);
+  color: #fff;
+  box-shadow: 0 0 12px var(--secondary-glow);
+}
+
+/* ===================================================
+   CHANNEL 03: TECH ARSENAL / SKILL MATRIX
+   =================================================== */
+.skills-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.skill-category-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.cat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+  margin-bottom: 14px;
+}
+
+.cat-icon {
+  font-size: 20px;
+}
+
+.cat-title {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: #fff;
+}
+
+.skill-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.skill-meta {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12px;
+}
+
+.skill-name {
+  color: #e6edf3;
+  font-weight: 500;
+}
+
+.skill-level-text {
+  font-family: var(--font-terminal);
+  font-size: 16px;
+  color: var(--primary-accent);
+}
+
+.skill-progress-bar {
+  width: 100%;
+  height: 10px;
+  background: #161b22;
+  border: 1px solid #30363d;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.skill-progress-fill {
+  height: 100%;
+  background: linear-gradient(to right, var(--primary-accent), var(--cyber-blue));
+  border-radius: 4px;
+}
+
+/* ===================================================
+   CHANNEL 04: ACADEMIC TIMELINE & MILESTONES
+   =================================================== */
+.timeline-container {
+  position: relative;
+  padding-left: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  bottom: 8px;
+  left: 8px;
+  width: 3px;
+  background: var(--primary-accent);
+  box-shadow: 0 0 8px var(--primary-glow);
+}
+
+.timeline-item {
+  position: relative;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 18px 20px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+}
+
+.timeline-dot {
+  position: absolute;
+  top: 22px;
+  left: -27px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-dark);
+  border: 3px solid var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.timeline-date {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--primary-accent);
+  margin-bottom: 6px;
+}
+
+.timeline-heading {
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.timeline-org {
+  font-size: 13px;
+  color: var(--cyber-blue);
+  margin-bottom: 8px;
+}
+
+.timeline-desc {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c9d1d9;
+}
+
+/* ===================================================
+   CHANNEL 05: SIGNAL TRANSMITTER / CONTACT
+   =================================================== */
+.contact-terminal-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 24px;
+}
+
+.terminal-box {
+  background: rgba(10, 14, 20, 0.95);
+  border: 2px solid var(--primary-accent);
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 170, 0.15);
+  overflow: hidden;
+}
+
+.terminal-top-bar {
+  background: #141b24;
+  border-bottom: 1px solid var(--primary-accent);
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.terminal-title {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--primary-accent);
+}
+
+.terminal-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.t-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.t-red { background: #ff5f56; }
+.t-yellow { background: #ffbd2e; }
+.t-green { background: #27c93f; }
+
+.terminal-body {
+  padding: 20px;
+}
+
+.terminal-prompt-intro {
+  font-family: var(--font-terminal);
+  font-size: 20px;
+  color: var(--osd-green);
+  line-height: 1.4;
+  margin-bottom: 18px;
+}
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.form-label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--text-muted);
+}
+
+.form-input, .form-textarea {
+  background: #0d121a;
+  border: 1px solid var(--border-color);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-size: 14px;
+  padding: 10px 14px;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.form-input:focus, .form-textarea:focus {
+  border-color: var(--primary-accent);
+  box-shadow: 0 0 10px var(--primary-glow);
+}
+
+.form-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+.submit-btn {
+  background: var(--primary-accent);
+  color: #000;
+  border: none;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  padding: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  box-shadow: 0 4px 0 #009966;
+  transition: all 0.15s ease;
+}
+
+.submit-btn:hover {
+  box-shadow: 0 0 16px var(--primary-glow);
+}
+
+.submit-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #009966;
+}
+
+.transmission-status {
+  margin-top: 14px;
+  font-family: var(--font-terminal);
+  font-size: 18px;
+  color: var(--osd-green);
+}
+
+.transmit-success {
+  background: rgba(0, 255, 170, 0.1);
+  border: 1px solid var(--primary-accent);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.transmit-success a {
+  color: var(--cyber-blue);
+}
+
+/* Contact Info Column */
+.contact-direct-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.direct-comms-title {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 10px;
+}
+
+.contact-channel-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 12px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #fff;
+  transition: all 0.18s ease;
+}
+
+.contact-channel-link:hover {
+  background: rgba(0, 255, 170, 0.1);
+  border-color: var(--primary-accent);
+  transform: translateX(4px);
+}
+
+.link-icon {
+  font-size: 20px;
+}
+
+.link-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.link-label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--primary-accent);
+}
+
+.link-val {
+  font-size: 13px;
+  color: #c9d1d9;
+}
+
+.resume-download-btn {
+  margin-top: 10px;
+  background: var(--secondary-accent);
+  color: #fff;
+  border-color: var(--secondary-accent);
+}
+
+.resume-download-btn:hover {
+  background: #ff2288;
+  color: #fff;
+  box-shadow: 0 0 16px var(--secondary-glow);
+}
+
+/* ===================================================
+   CHANNEL 06: EASTER EGG / ARCADE & SMPTE BARS
+   =================================================== */
+.arcade-channel-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* SMPTE Color Test Bars */
+.smpte-bars {
+  width: 100%;
+  height: 28px;
+  display: flex;
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+.smpte-bar {
+  flex: 1;
+  height: 100%;
+}
+.bar-gray { background: #c0c0c0; }
+.bar-yellow { background: #c0c000; }
+.bar-cyan { background: #00c0c0; }
+.bar-green { background: #00c000; }
+.bar-magenta { background: #c000c0; }
+.bar-red { background: #c00000; }
+.bar-blue { background: #0000c0; }
+
+.arcade-canvas-frame {
+  background: #061309;
+  border: 4px solid #1b5e20;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+  position: relative;
+  max-width: 100%;
+}
+
+#arcade-canvas {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  border-radius: 6px;
+  image-rendering: pixelated;
+}
+
+.arcade-instructions {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: #8c909e;
+  text-align: center;
+  line-height: 1.8;
+}
+
+.arcade-instructions span {
+  color: var(--primary-accent);
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .about-dossier-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-terminal-grid {
+    grid-template-columns: 1fr;
+  }
+}

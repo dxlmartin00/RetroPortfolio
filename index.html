@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Luigie Martin (@dxlmartin00) - Fresh Graduate in Computer Science, Software Engineer & Mobile Developer. Interactive Retro Pixelated CRT TV Portfolio." />
+  <meta name="author" content="Luigie Martin" />
+  <title>Luigie Martin | Retro CRT TV Portfolio</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📺</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&family=VT323&display=swap" rel="stylesheet" />
+
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/remote.css" />
+  <link rel="stylesheet" href="css/channels.css" />
+</head>
+<body>
+
+  <!-- Main Stage -->
+  <main class="portfolio-stage">
+
+    <!-- RETRO CRT TELEVISION CASING -->
+    <div class="tv-casing-container">
+
+      <!-- Dual Antenna Rig -->
+      <div class="tv-antenna-rig">
+        <div class="antenna-rod antenna-left"></div>
+        <div class="antenna-base"></div>
+        <div class="antenna-rod antenna-right"></div>
+      </div>
+
+      <!-- TV Main Wooden & Metallic Chassis -->
+      <div class="tv-chassis" id="tv-set">
+        
+        <!-- Brand Plate -->
+        <div class="tv-brand-plate">DXL-VISION • CRT 2026</div>
+
+        <!-- Inner Bezel -->
+        <div class="tv-screen-bezel">
+
+          <!-- Curved CRT Viewport -->
+          <div class="tv-screen-viewport" id="tv-screen-viewport">
+
+            <!-- CRT Shaders & Scanlines Layer -->
+            <div class="crt-scanlines"></div>
+            <div class="crt-curvature-glare"></div>
+
+            <!-- Canvas for High-Performance Pixel Static Noise -->
+            <canvas id="static-canvas"></canvas>
+
+            <!-- Retro Green On-Screen Display (OSD) -->
+            <div class="tv-osd" id="tv-osd">
+              <span class="osd-ch">CH 01</span>
+              <span class="osd-title">ABOUT - PROFILE DOSSIER</span>
+              <span class="osd-extra">STEREO [AUTO-LOCK]</span>
+            </div>
+
+            <!-- TV Guide Broadcast Schedule Modal -->
+            <div class="tv-guide-modal" id="tv-guide-modal">
+              <div class="guide-header">
+                <span class="guide-title">📺 DXL-TV BROADCAST DIRECTORY</span>
+                <button class="guide-close-btn" id="close-guide-btn">ESC / CLOSE [X]</button>
+              </div>
+              <div class="guide-channel-list" id="guide-channel-list">
+                <!-- Dynamically generated via app.js -->
+              </div>
+            </div>
+
+            <!-- Screen Active Content Viewports -->
+            <div class="tv-screen-content" id="tv-screen-content">
+
+              <!-- ==========================================
+                   CHANNEL 01: ABOUT ME / CS FRESH GRAD DOSSIER
+                   ========================================== -->
+              <section class="channel-panel" id="channel-1">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 01</span>
+                    <h2 class="channel-title">LUIGIE MARTIN</h2>
+                    <p class="channel-subtitle">Fresh Graduate in Computer Science • Software Engineer</p>
+                  </div>
+                  <span class="channel-counter">CH 01</span>
+                </div>
+
+                <div class="about-dossier-grid">
+                  <!-- RPG Character Card -->
+                  <div class="character-card">
+                    <div class="avatar-frame">
+                      <!-- Pixel Avatar Illustration -->
+                      <svg class="pixel-avatar-img" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="16" height="16" fill="#0b1320"/>
+                        <!-- Head / Hair -->
+                        <rect x="4" y="2" width="8" height="3" fill="#3a2e39"/>
+                        <rect x="3" y="3" width="10" height="2" fill="#241b23"/>
+                        <!-- Face -->
+                        <rect x="4" y="5" width="8" height="5" fill="#f8c8a0"/>
+                        <!-- Pixel Glasses / Eyes -->
+                        <rect x="5" y="6" width="2" height="2" fill="#00d9ff"/>
+                        <rect x="9" y="6" width="2" height="2" fill="#00d9ff"/>
+                        <rect x="7" y="6" width="2" height="1" fill="#111"/>
+                        <rect x="4" y="6" width="1" height="1" fill="#111"/>
+                        <rect x="11" y="6" width="1" height="1" fill="#111"/>
+                        <!-- Smile -->
+                        <rect x="7" y="9" width="2" height="1" fill="#b35a50"/>
+                        <!-- Jacket / Hoodie -->
+                        <rect x="3" y="10" width="10" height="6" fill="#1f6feb"/>
+                        <rect x="6" y="10" width="4" height="6" fill="#00ffaa"/>
+                      </svg>
+                      <div class="avatar-corner-deco">LVL 26</div>
+                    </div>
+
+                    <h3 class="dossier-name">Luigie Martin</h3>
+                    <div class="dossier-handle">@dxlmartin00</div>
+
+                    <!-- RPG Stats -->
+                    <div class="rpg-stats-box">
+                      <div class="stat-row">
+                        <span class="stat-name">CLASS:</span>
+                        <span class="stat-val">CS Engineer</span>
+                      </div>
+                      <div class="stat-row">
+                        <span class="stat-name">DEGREE:</span>
+                        <span class="stat-val">B.S. Comp Sci</span>
+                      </div>
+                      <div class="stat-row">
+                        <span class="stat-name">ALMA MATER:</span>
+                        <span class="stat-val">NEMSU Lianga</span>
+                      </div>
+
+                      <div class="stat-item" style="margin-top: 6px;">
+                        <div class="stat-row">
+                          <span class="stat-name">LOGIC (HP):</span>
+                          <span class="stat-val">100 / 100</span>
+                        </div>
+                        <div class="stat-bar-container">
+                          <div class="stat-bar-fill fill-hp"></div>
+                        </div>
+                      </div>
+
+                      <div class="stat-item">
+                        <div class="stat-row">
+                          <span class="stat-name">CAFFEINE (MP):</span>
+                          <span class="stat-val">98 / 100</span>
+                        </div>
+                        <div class="stat-bar-container">
+                          <div class="stat-bar-fill fill-mp"></div>
+                        </div>
+                      </div>
+
+                      <div class="stat-item">
+                        <div class="stat-row">
+                          <span class="stat-name">CODE EXP:</span>
+                          <span class="stat-val">95% (READY)</span>
+                        </div>
+                        <div class="stat-bar-container">
+                          <div class="stat-bar-fill fill-xp"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Dossier Bio Details -->
+                  <div class="dossier-content">
+                    <div class="dossier-bio-card">
+                      <h3 class="bio-greeting">
+                        <span>👋</span> HELLO, WORLD!
+                      </h3>
+                      <p class="bio-text">
+                        I am a passionate fresh graduate with a Bachelor of Science in Computer Science from <strong>North Eastern Mindanao State University - Lianga Campus</strong>.
+                      </p>
+                      <p class="bio-text">
+                        I specialize in building practical, high-performance applications across the stack—from native and cross-platform mobile experiences (<strong>Flutter & Kotlin Android</strong>) to fullstack web systems (<strong>TypeScript, React, Node/Express</strong>) and applied AI pipelines (<strong>Computer Vision, EasyOCR & NLP</strong>).
+                      </p>
+                      <p class="bio-text">
+                        Whether designing automated campus systems like <em>QROTC</em>, AI curriculum assistants like <em>CS_Assistant</em>, or intelligent mobile diagnostic tools like <em>FecalVision</em>, I love tackling real-world problems with elegant code.
+                      </p>
+
+                      <div class="bio-badges-row">
+                        <span class="bio-badge">🎓 Fresh CS Graduate</span>
+                        <span class="bio-badge">📱 Mobile Developer (Flutter / Kotlin)</span>
+                        <span class="bio-badge">💻 Fullstack Web (React / TypeScript)</span>
+                        <span class="bio-badge">🤖 AI / Computer Vision</span>
+                      </div>
+                    </div>
+
+                    <!-- Metrics / Highlights -->
+                    <div class="about-metrics-row">
+                      <div class="metric-card">
+                        <div class="metric-num">14+</div>
+                        <div class="metric-label">GitHub Repositories</div>
+                      </div>
+                      <div class="metric-card">
+                        <div class="metric-num">5+</div>
+                        <div class="metric-label">Mobile & Web Systems</div>
+                      </div>
+                      <div class="metric-card">
+                        <div class="metric-num">100%</div>
+                        <div class="metric-label">Passion for Innovation</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ==========================================
+                   CHANNEL 02: FEATURED PROJECTS (14 REPOSITORIES)
+                   ========================================== -->
+              <section class="channel-panel" id="channel-2">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 02</span>
+                    <h2 class="channel-title">PROJECT REEL</h2>
+                    <p class="channel-subtitle">14 Projects from @dxlmartin00 • Mobile, Fullstack & AI</p>
+                  </div>
+                  <span class="channel-counter">CH 02</span>
+                </div>
+
+                <!-- Filter Pills -->
+                <div class="projects-filter-bar">
+                  <button class="filter-pill active" data-filter="all">ALL (14)</button>
+                  <button class="filter-pill" data-filter="mobile">📱 MOBILE (FLUTTER/KOTLIN)</button>
+                  <button class="filter-pill" data-filter="web">🌐 WEB & FULLSTACK</button>
+                  <button class="filter-pill" data-filter="ai">🤖 AI & COMPUTER VISION</button>
+                </div>
+
+                <!-- Grid of Project Cards -->
+                <div class="projects-grid" id="projects-grid">
+                  <!-- Dynamically populated from js/projects-data.js -->
+                </div>
+              </section>
+
+              <!-- ==========================================
+                   CHANNEL 03: TECH ARSENAL / SKILLS
+                   ========================================== -->
+              <section class="channel-panel" id="channel-3">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 03</span>
+                    <h2 class="channel-title">TECH ARSENAL</h2>
+                    <p class="channel-subtitle">8-Bit Skill Inventory & Technical Competencies</p>
+                  </div>
+                  <span class="channel-counter">CH 03</span>
+                </div>
+
+                <div class="skills-container">
+                  <!-- Languages -->
+                  <div class="skill-category-card">
+                    <div class="cat-header">
+                      <span class="cat-icon">⚡</span>
+                      <h3 class="cat-title">PROGRAMMING LANGUAGES</h3>
+                    </div>
+                    <div class="skill-items-list">
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Kotlin (Android)</span>
+                          <span class="skill-level-text">90%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Dart (Flutter)</span>
+                          <span class="skill-level-text">92%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 92%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Python (AI / CV / NLP)</span>
+                          <span class="skill-level-text">88%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 88%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">TypeScript / JavaScript</span>
+                          <span class="skill-level-text">86%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 86%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">HTML5 / Modern CSS3</span>
+                          <span class="skill-level-text">94%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 94%;"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Frameworks & Tools -->
+                  <div class="skill-category-card">
+                    <div class="cat-header">
+                      <span class="cat-icon">🛠️</span>
+                      <h3 class="cat-title">FRAMEWORKS & ENGINES</h3>
+                    </div>
+                    <div class="skill-items-list">
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Flutter Framework</span>
+                          <span class="skill-level-text">92%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 92%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Android SDK & Jetpack</span>
+                          <span class="skill-level-text">88%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 88%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">React / Next.js</span>
+                          <span class="skill-level-text">85%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 85%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Node.js & Express</span>
+                          <span class="skill-level-text">84%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 84%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Streamlit Web Apps</span>
+                          <span class="skill-level-text">86%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 86%;"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- AI & Computer Vision -->
+                  <div class="skill-category-card">
+                    <div class="cat-header">
+                      <span class="cat-icon">🧠</span>
+                      <h3 class="cat-title">AI, COMPUTER VISION & DATA</h3>
+                    </div>
+                    <div class="skill-items-list">
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Computer Vision & OpenCV</span>
+                          <span class="skill-level-text">85%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 85%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">EasyOCR & Image Recognition</span>
+                          <span class="skill-level-text">90%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">NLP & Sentiment Analysis</span>
+                          <span class="skill-level-text">82%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 82%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">TensorFlow Lite / On-Device ML</span>
+                          <span class="skill-level-text">80%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 80%;"></div></div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Platforms & Workflow -->
+                  <div class="skill-category-card">
+                    <div class="cat-header">
+                      <span class="cat-icon">🚀</span>
+                      <h3 class="cat-title">DEPLOYMENT & TOOLS</h3>
+                    </div>
+                    <div class="skill-items-list">
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Git & GitHub Version Control</span>
+                          <span class="skill-level-text">92%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 92%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Vercel & Cloud Hosting</span>
+                          <span class="skill-level-text">90%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 90%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">Firebase / Firestore</span>
+                          <span class="skill-level-text">84%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 84%;"></div></div>
+                      </div>
+                      <div class="skill-item">
+                        <div class="skill-meta">
+                          <span class="skill-name">RESTful APIs & JSON Arch</span>
+                          <span class="skill-level-text">88%</span>
+                        </div>
+                        <div class="skill-progress-bar"><div class="skill-progress-fill" style="width: 88%;"></div></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ==========================================
+                   CHANNEL 04: ACADEMIC JOURNEY & MILESTONES
+                   ========================================== -->
+              <section class="channel-panel" id="channel-4">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 04</span>
+                    <h2 class="channel-title">ACADEMIC JOURNEY</h2>
+                    <p class="channel-subtitle">Education, Capstones & Campus Innovation</p>
+                  </div>
+                  <span class="channel-counter">CH 04</span>
+                </div>
+
+                <div class="timeline-container">
+                  <!-- Graduation -->
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2026 • RECENT MILESTONE</div>
+                    <h3 class="timeline-heading">Bachelor of Science in Computer Science (BSCS)</h3>
+                    <div class="timeline-org">North Eastern Mindanao State University (NEMSU) - Lianga Campus</div>
+                    <p class="timeline-desc">
+                      Completed rigorous 4-year degree focusing on Software Engineering, Data Structures & Algorithms, Mobile Application Engineering, Artificial Intelligence, and Database Systems.
+                    </p>
+                  </div>
+
+                  <!-- Capstone & Diagnostic AI -->
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2025 - 2026 • CAPSTONE PROJECT</div>
+                    <h3 class="timeline-heading">FecalVision - AI-Assisted Mobile Diagnostic Tool</h3>
+                    <div class="timeline-org">Healthcare & Computer Vision Screening</div>
+                    <p class="timeline-desc">
+                      Spearheaded the development of a Flutter-based mobile screening application utilizing on-device machine learning image classification algorithms to assist medical and laboratory diagnostics.
+                    </p>
+                  </div>
+
+                  <!-- Curriculum Chatbot -->
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2026 • AI CURRICULUM PROJECT</div>
+                    <h3 class="timeline-heading">CS_Assistant Chatbot Development</h3>
+                    <div class="timeline-org">NEMSU Lianga Computer Science Department</div>
+                    <p class="timeline-desc">
+                      Engineered a tailored Python NLP conversational bot specifically trained on the university's CS degree syllabus, helping incoming and current students navigate course prerequisites, subject descriptions, and degree paths.
+                    </p>
+                  </div>
+
+                  <!-- Military Science Attendance Automation -->
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2026 • CAMPUS SYSTEM DEPLOYMENT</div>
+                    <h3 class="timeline-heading">QROTC - Digital Cadet Attendance System</h3>
+                    <div class="timeline-org">University ROTC & Military Science Unit</div>
+                    <p class="timeline-desc">
+                      Eliminated manual paperwork by building a rapid QR-code scanner web application for ROTC formations, processing hundreds of cadet check-ins within minutes with real-time roster export.
+                    </p>
+                  </div>
+
+                  <!-- Faculty Tracking -->
+                  <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-date">2026 • FULLSTACK PLATFORM</div>
+                    <h3 class="timeline-heading">ProfTrack - Faculty Performance & Evaluation</h3>
+                    <div class="timeline-org">Academic Administration Tool</div>
+                    <p class="timeline-desc">
+                      Designed and built a TypeScript fullstack scheduling and faculty metric evaluation hub to streamline department evaluations and scheduling workflows.
+                    </p>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ==========================================
+                   CHANNEL 05: SIGNAL TRANSMITTER / CONTACT
+                   ========================================== -->
+              <section class="channel-panel" id="channel-5">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 05</span>
+                    <h2 class="channel-title">SIGNAL TRANSMITTER</h2>
+                    <p class="channel-subtitle">Direct Communication & Transmission Links</p>
+                  </div>
+                  <span class="channel-counter">CH 05</span>
+                </div>
+
+                <div class="contact-terminal-grid">
+                  <!-- Interactive Terminal Contact Form -->
+                  <div class="terminal-box">
+                    <div class="terminal-top-bar">
+                      <span class="terminal-title">TERMINAL://COMMS-UPLINK.EXE</span>
+                      <div class="terminal-dots">
+                        <span class="t-dot t-red"></span>
+                        <span class="t-dot t-yellow"></span>
+                        <span class="t-dot t-green"></span>
+                      </div>
+                    </div>
+                    <div class="terminal-body">
+                      <div class="terminal-prompt-intro">
+                        &gt; TARGET: LUIGIE MARTIN<br />
+                        &gt; STATUS: OPEN FOR FULL-TIME ROLES & COLLABORATIONS<br />
+                        &gt; TRANSMIT MESSAGE PACKET BELOW:
+                      </div>
+
+                      <form class="contact-form" id="terminal-contact-form">
+                        <div class="form-group">
+                          <label class="form-label" for="contact-name">IDENTIFIER / YOUR NAME:</label>
+                          <input type="text" id="contact-name" class="form-input" placeholder="e.g. Recruiter, Lead Engineer" required />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" for="contact-email">RETURN FREQUENCY / EMAIL:</label>
+                          <input type="email" id="contact-email" class="form-input" placeholder="e.g. hiring@company.com" required />
+                        </div>
+                        <div class="form-group">
+                          <label class="form-label" for="contact-msg">TRANSMISSION PAYLOAD / MESSAGE:</label>
+                          <textarea id="contact-msg" class="form-textarea" placeholder="Hello Luigie, we checked out your portfolio and would like to talk..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                          📡 TRANSMIT PACKET
+                        </button>
+                      </form>
+
+                      <div class="transmission-status" id="transmission-status"></div>
+                    </div>
+                  </div>
+
+                  <!-- Direct Channels & Socials -->
+                  <div class="contact-direct-card">
+                    <h3 class="direct-comms-title">DIRECT COMMS CHANNELS</h3>
+
+                    <a href="https://github.com/dxlmartin00" target="_blank" rel="noopener noreferrer" class="contact-channel-link">
+                      <span class="link-icon">🐙</span>
+                      <div class="link-meta">
+                        <span class="link-label">GITHUB REPOSITORIES</span>
+                        <span class="link-val">github.com/dxlmartin00</span>
+                      </div>
+                    </a>
+
+                    <a href="mailto:dxlmartin00@gmail.com" class="contact-channel-link">
+                      <span class="link-icon">✉️</span>
+                      <div class="link-meta">
+                        <span class="link-label">DIRECT EMAIL</span>
+                        <span class="link-val">dxlmartin00@gmail.com</span>
+                      </div>
+                    </a>
+
+                    <a href="https://webquiz-drab.vercel.app" target="_blank" rel="noopener noreferrer" class="contact-channel-link">
+                      <span class="link-icon">🚀</span>
+                      <div class="link-meta">
+                        <span class="link-label">FEATURED LIVE DEPLOY</span>
+                        <span class="link-val">webquiz-drab.vercel.app</span>
+                      </div>
+                    </a>
+
+                    <a href="https://martin-portfolio-six.vercel.app" target="_blank" rel="noopener noreferrer" class="contact-channel-link">
+                      <span class="link-icon">🌐</span>
+                      <div class="link-meta">
+                        <span class="link-label">EARLY WEB PORTFOLIO</span>
+                        <span class="link-val">martin-portfolio-six.vercel.app</span>
+                      </div>
+                    </a>
+
+                    <!-- Resume Download Link -->
+                    <a href="https://github.com/dxlmartin00" target="_blank" rel="noopener noreferrer" class="pixel-btn resume-download-btn">
+                      <span>📄 VIEW GITHUB RESUME & REPOS</span>
+                    </a>
+                  </div>
+                </div>
+              </section>
+
+              <!-- ==========================================
+                   CHANNEL 06: EASTER EGG / ARCADE & TEST BARS
+                   ========================================== -->
+              <section class="channel-panel" id="channel-6">
+                <div class="channel-header">
+                  <div>
+                    <span class="channel-tag-pill">BROADCAST 06</span>
+                    <h2 class="channel-title">CRT TEST PATTERN & ARCADE</h2>
+                    <p class="channel-subtitle">Secret Channel • Playable Retro CRT Tennis</p>
+                  </div>
+                  <span class="channel-counter">CH 06</span>
+                </div>
+
+                <div class="arcade-channel-wrapper">
+                  <!-- SMPTE Color Test Bars -->
+                  <div class="smpte-bars">
+                    <div class="smpte-bar bar-gray"></div>
+                    <div class="smpte-bar bar-yellow"></div>
+                    <div class="smpte-bar bar-cyan"></div>
+                    <div class="smpte-bar bar-green"></div>
+                    <div class="smpte-bar bar-magenta"></div>
+                    <div class="smpte-bar bar-red"></div>
+                    <div class="smpte-bar bar-blue"></div>
+                  </div>
+
+                  <!-- Canvas Arcade Arena -->
+                  <div class="arcade-canvas-frame">
+                    <canvas id="arcade-canvas"></canvas>
+                  </div>
+
+                  <!-- Controls Help -->
+                  <div class="arcade-instructions">
+                    🎮 CONTROLS: USE <span>REMOTE D-PAD (UP/DOWN)</span> OR KEYBOARD <span>ARROW KEYS / [W] [S]</span> TO DEFEND YOUR GOAL!
+                  </div>
+                </div>
+              </section>
+
+            </div> <!-- /tv-screen-content -->
+
+          </div> <!-- /tv-screen-viewport -->
+
+        </div> <!-- /tv-screen-bezel -->
+
+        <!-- PHYSICAL TV CONTROLS PANEL (RIGHT SIDE OF CHASSIS) -->
+        <aside class="tv-controls-panel">
+          
+          <!-- Rotary Channel Dial -->
+          <div class="dial-section">
+            <div class="dial-label">CHANNEL TUNER</div>
+            <div class="rotary-knob-wrapper">
+              <div class="rotary-knob" id="tv-rotary-dial" title="Click to rotate channel">
+                <div class="rotary-marker"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Channel Step Mini-Buttons -->
+          <div class="tv-btn-cluster">
+            <div class="tv-ch-step-row">
+              <button class="tv-mini-btn" id="tv-knob-ch-up" title="Channel Up">▲ CH</button>
+              <button class="tv-mini-btn" id="tv-knob-ch-down" title="Channel Down">▼ CH</button>
+            </div>
+            <div class="tv-ch-step-row">
+              <button class="tv-mini-btn" id="tv-knob-vol-up" title="Volume Up">▲ VOL</button>
+              <button class="tv-mini-btn" id="tv-knob-vol-down" title="Volume Down">▼ VOL</button>
+            </div>
+          </div>
+
+          <!-- Power Button Switch -->
+          <button class="tv-power-switch" id="tv-knob-power" title="Power TV On/Off">
+            <span class="power-led-dot"></span>
+            <span>POWER</span>
+          </button>
+
+          <!-- Speaker Grill Slits -->
+          <div class="tv-speaker-grill">
+            <div class="speaker-slit"></div>
+            <div class="speaker-slit"></div>
+            <div class="speaker-slit"></div>
+            <div class="speaker-slit"></div>
+            <div class="speaker-slit"></div>
+            <div class="speaker-slit"></div>
+          </div>
+
+        </aside>
+
+      </div> <!-- /tv-chassis -->
+
+      <!-- TV Stand Legs -->
+      <div class="tv-stand-legs">
+        <div class="tv-leg tv-leg-left"></div>
+        <div class="tv-leg tv-leg-right"></div>
+      </div>
+
+    </div> <!-- /tv-casing-container -->
+
+
+    <!-- ==========================================
+         INTERACTIVE HANDHELD REMOTE CONTROL WIDGET
+         ========================================== -->
+    <aside class="remote-wrapper" id="remote-control">
+      
+      <div class="remote-body">
+        
+        <!-- Infrared Transmitter Tip -->
+        <div class="remote-ir-sensor">
+          <div class="ir-led" id="remote-ir-led"></div>
+        </div>
+
+        <!-- Mobile Close Drawer Row -->
+        <div class="remote-close-row">
+          <button class="remote-close-btn" id="remote-close-btn">MINIMIZE ▼</button>
+        </div>
+
+        <!-- Remote Brand Header -->
+        <div class="remote-brand">
+          <span class="remote-brand-name">TELE-REMOTE 3000</span>
+          <span class="remote-brand-model">CS-EDITION • INFRARED</span>
+        </div>
+
+        <!-- TOP ROW: Power, Mute, Guide -->
+        <div class="remote-top-row">
+          <button class="remote-btn-power" id="btn-power" title="TV Power On/Off">
+            ⏻
+          </button>
+          <button class="remote-aux-btn" id="btn-mute" title="Mute/Unmute Audio">
+            MUTE
+          </button>
+          <button class="remote-aux-btn" id="btn-guide" title="TV Guide Schedule">
+            GUIDE
+          </button>
+        </div>
+
+        <!-- NUMERIC KEYPAD (Channels 1 to 6) -->
+        <div class="remote-numpad">
+          <button class="remote-num-btn active-tuned" data-channel="1" title="Tune Channel 1">
+            <span>1</span>
+            <span class="btn-sublabel">ABOUT</span>
+          </button>
+          <button class="remote-num-btn" data-channel="2" title="Tune Channel 2">
+            <span>2</span>
+            <span class="btn-sublabel">PROJECTS</span>
+          </button>
+          <button class="remote-num-btn" data-channel="3" title="Tune Channel 3">
+            <span>3</span>
+            <span class="btn-sublabel">SKILLS</span>
+          </button>
+          <button class="remote-num-btn" data-channel="4" title="Tune Channel 4">
+            <span>4</span>
+            <span class="btn-sublabel">JOURNEY</span>
+          </button>
+          <button class="remote-num-btn" data-channel="5" title="Tune Channel 5">
+            <span>5</span>
+            <span class="btn-sublabel">CONTACT</span>
+          </button>
+          <button class="remote-num-btn" data-channel="6" title="Tune Channel 6">
+            <span>6</span>
+            <span class="btn-sublabel">ARCADE</span>
+          </button>
+        </div>
+
+        <!-- CH / VOL ROCKERS -->
+        <div class="remote-rockers-row">
+          <div class="rocker-pill">
+            <span class="rocker-label">CH</span>
+            <button class="rocker-btn" id="btn-ch-up">▲</button>
+            <button class="rocker-btn" id="btn-ch-down">▼</button>
+          </div>
+
+          <div class="rocker-pill">
+            <span class="rocker-label">VOL</span>
+            <button class="rocker-btn" id="btn-vol-up">▲</button>
+            <button class="rocker-btn" id="btn-vol-down">▼</button>
+          </div>
+        </div>
+
+        <!-- D-PAD FOR NAVIGATION & ARCADE -->
+        <div class="remote-dpad-container">
+          <div class="dpad-cross">
+            <button class="dpad-btn dpad-up" id="dpad-up" title="Up">▲</button>
+            <button class="dpad-btn dpad-down" id="dpad-down" title="Down">▼</button>
+            <button class="dpad-btn dpad-left" id="dpad-left" title="Left">◀</button>
+            <button class="dpad-btn dpad-right" id="dpad-right" title="Right">▶</button>
+            <button class="dpad-center" id="dpad-ok" title="OK / Select">OK</button>
+          </div>
+        </div>
+
+        <!-- 4 COLOR THEME BUTTONS (Cyberpunk, Amber, Matrix Green, B&W) -->
+        <div class="remote-color-cluster">
+          <button class="remote-color-btn btn-theme-cyber" data-theme="cyberpunk" title="Color Theme: Cyberpunk RGB"></button>
+          <button class="remote-color-btn btn-theme-amber" data-theme="amber" title="Color Theme: Amber 1980s CRT"></button>
+          <button class="remote-color-btn btn-theme-matrix" data-theme="matrix" title="Color Theme: Matrix Green Phosphor"></button>
+          <button class="remote-color-btn btn-theme-bw" data-theme="classic-bw" title="Color Theme: Classic B&W"></button>
+        </div>
+
+      </div>
+
+    </aside>
+
+    <!-- MOBILE FLOATING REMOTE TOGGLE PILL -->
+    <button class="mobile-remote-pill" id="mobile-remote-toggle">
+      <span>📱</span>
+      <span>REMOTE CONTROL</span>
+    </button>
+
+  </main>
+
+  <!-- Application Scripts -->
+  <script src="js/projects-data.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/tv-effects.js"></script>
+  <script src="js/arcade.js"></script>
+  <script src="js/remote.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

@@ -143,80 +143,147 @@ class PortfolioApp {
     tvEffects.showVolumeOSD(this.volume, this.isMuted);
   }
 
-  // Setup listeners for the initial scroll/click to power on TV and summon remote
+  // Scroll-driven diagonal remote progression (moves slower as user scrolls down page)
   setupIgnitionListeners() {
-    const triggerIgnition = (e) => {
+    this.scrollProgress = 0;
+    this.targetScrollProgress = 0;
+
+    const onWindowScroll = () => {
       if (this.hasIgnited) return;
-      if (e && e.cancelable) e.preventDefault();
-      this.igniteExperience();
+
+      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const currentY = window.scrollY;
+      this.targetScrollProgress = Math.max(0, Math.min(1, currentY / maxScroll));
     };
 
-    // Scroll (mouse wheel / trackpad) anywhere on window
-    const onWheelIgnite = (e) => {
+    window.addEventListener('scroll', onWindowScroll, { passive: true });
+
+    // Smooth RAF loop for interpolation (gives physical weighted glide to the remote)
+    const renderLoop = () => {
       if (this.hasIgnited) return;
-      if (Math.abs(e.deltaY) > 5 || Math.abs(e.deltaX) > 5) {
-        if (e.cancelable) e.preventDefault();
-        triggerIgnition(e);
+
+      // Smooth interpolation
+      const diff = this.targetScrollProgress - this.scrollProgress;
+      this.scrollProgress += diff * 0.12;
+      if (Math.abs(diff) < 0.0005) {
+        this.scrollProgress = this.targetScrollProgress;
       }
-    };
-    window.addEventListener('wheel', onWheelIgnite, { passive: false });
 
-    // Touch drag / swipe on mobile
-    let touchStartY = 0;
-    const onTouchStartIgnite = (e) => {
-      touchStartY = e.touches[0].clientY;
-    };
-    const onTouchMoveIgnite = (e) => {
-      if (this.hasIgnited) return;
-      const touchEndY = e.touches[0].clientY;
-      if (Math.abs(touchStartY - touchEndY) > 15) {
-        if (e.cancelable) e.preventDefault();
-        triggerIgnition(e);
-      }
-    };
-    window.addEventListener('touchstart', onTouchStartIgnite, { passive: true });
-    window.addEventListener('touchmove', onTouchMoveIgnite, { passive: false });
+      this.updateRemoteScrollPosition(this.scrollProgress);
+      this.updateStandbyProgress(this.scrollProgress);
 
-    // Click on standby screen elements
-    const standbyScreen = document.getElementById('tv-standby-screen');
+      requestAnimationFrame(renderLoop);
+    };
+    requestAnimationFrame(renderLoop);
+
+    // Initial positioning
+    this.updateRemoteScrollPosition(0);
+
+    // Manual click on the standby click button (if someone clicks early)
     const standbyBtn = document.getElementById('standby-click-btn');
-    const standbyPrompt = document.querySelector('.standby-scroll-prompt');
-
-    if (standbyBtn) standbyBtn.addEventListener('click', triggerIgnition);
-    if (standbyPrompt) standbyPrompt.addEventListener('click', triggerIgnition);
-    if (standbyScreen) standbyScreen.addEventListener('click', triggerIgnition);
-
-    // Keyboard trigger (ArrowDown, Space, Enter, PageDown)
-    const onKeyIgnite = (e) => {
-      if (this.hasIgnited) return;
-      if (['ArrowDown', 'ArrowUp', ' ', 'Enter', 'PageDown', '1'].includes(e.key)) {
-        if (e.cancelable) e.preventDefault();
-        triggerIgnition(e);
-      }
-    };
-    window.addEventListener('keydown', onKeyIgnite);
+    if (standbyBtn) {
+      standbyBtn.addEventListener('click', () => {
+        this.targetScrollProgress = 1;
+        this.scrollProgress = 1;
+        this.updateRemoteScrollPosition(1);
+        this.updateStandbyProgress(1);
+        this.igniteExperience();
+      });
+    }
 
     this.cleanupIgnition = () => {
-      window.removeEventListener('wheel', onWheelIgnite);
-      window.removeEventListener('touchstart', onTouchStartIgnite);
-      window.removeEventListener('touchmove', onTouchMoveIgnite);
-      window.removeEventListener('keydown', onKeyIgnite);
+      window.removeEventListener('scroll', onWindowScroll);
     };
   }
 
-  // Smooth diagonal entrance for remote & cinematic CRT TV ignition
+  // Updates the remote's diagonal position based on scroll progress (0.0 to 1.0)
+  updateRemoteScrollPosition(progress) {
+    const remoteEl = document.getElementById('remote-control');
+    if (!remoteEl) return;
+
+    // Slower, smooth diagonal trajectory:
+    // At 0%: off-screen at bottom right
+    // At 100%: perfectly docked
+    const inv = 1 - progress;
+    const tx = inv * 260;
+    const ty = inv * 560;
+    const rot = inv * 36;
+    const scale = 0.75 + progress * 0.25;
+    const opacity = Math.min(1, progress * 1.6);
+
+    remoteEl.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) rotate(${rot.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
+    remoteEl.style.opacity = opacity.toFixed(2);
+
+    // Power button pulsating ring once remote is in reach (at bottom of scroll)
+    const powerBtnWrapper = document.getElementById('power-btn-wrapper');
+    if (powerBtnWrapper) {
+      if (progress >= 0.90) {
+        powerBtnWrapper.classList.add('pulsing');
+        remoteEl.style.pointerEvents = 'auto';
+      } else {
+        powerBtnWrapper.classList.remove('pulsing');
+        remoteEl.style.pointerEvents = 'none';
+      }
+    }
+
+    // Mobile floating pill
+    const mobilePill = document.getElementById('mobile-remote-toggle');
+    if (mobilePill) {
+      if (progress >= 0.85) {
+        mobilePill.classList.add('pill-visible');
+      } else {
+        mobilePill.classList.remove('pill-visible');
+      }
+    }
+  }
+
+  // Updates the CRT Standby screen text & progress bar
+  updateStandbyProgress(progress) {
+    const percent = Math.round(progress * 100);
+    const fillEl = document.getElementById('standby-progress-fill');
+    const labelEl = document.getElementById('standby-progress-label');
+    const promptText = document.getElementById('standby-prompt-text');
+    const readyNotice = document.getElementById('standby-ready-notice');
+
+    if (fillEl) fillEl.style.width = `${percent}%`;
+    if (labelEl) labelEl.textContent = `REMOTE PROXIMITY: ${percent}%`;
+
+    if (progress >= 0.90) {
+      if (promptText) promptText.textContent = 'REMOTE REACHED! CLICK RED POWER BUTTON ⏻';
+      if (readyNotice) readyNotice.style.display = 'block';
+    } else if (progress > 0.45) {
+      if (promptText) promptText.textContent = 'KEEP SCROLLING... RETRIEVING REMOTE';
+      if (readyNotice) readyNotice.style.display = 'none';
+    } else {
+      if (promptText) promptText.textContent = 'SCROLL DOWN TO SUMMON REMOTE';
+      if (readyNotice) readyNotice.style.display = 'none';
+    }
+  }
+
+  // Ignites the TV ONLY when the user clicks the power button manually!
   igniteExperience() {
     if (this.hasIgnited) return;
     this.hasIgnited = true;
     if (this.cleanupIgnition) this.cleanupIgnition();
 
-    // 1. Initialize procedural Web Audio on this user gesture
+    // 1. Initialize procedural Web Audio on this user click
     retroAudio.init();
 
-    // 2. Summon remote control diagonally from bottom-right!
+    // 2. Lock page runway so screen remains pinned for TV channel surfing
+    document.body.classList.add('tv-is-powered-on');
+    window.scrollTo(0, 0);
+
+    // 3. Ensure remote is fully docked and locked
     const remoteEl = document.getElementById('remote-control');
     if (remoteEl) {
+      remoteEl.style.transform = '';
+      remoteEl.style.opacity = '';
       remoteEl.classList.add('remote-summoned');
+    }
+
+    const powerBtnWrapper = document.getElementById('power-btn-wrapper');
+    if (powerBtnWrapper) {
+      powerBtnWrapper.classList.remove('pulsing');
     }
 
     const mobilePill = document.getElementById('mobile-remote-toggle');
@@ -224,16 +291,16 @@ class PortfolioApp {
       mobilePill.classList.add('pill-visible');
     }
 
-    // 3. Play CRT power-up whine & degauss sound
+    // 4. Play CRT power-up whine & degauss sound
     retroAudio.playPower(true);
 
-    // 4. Glitch & Fade out Standby screen
+    // 5. Glitch & Fade out Standby screen
     const standbyScreen = document.getElementById('tv-standby-screen');
     if (standbyScreen) {
       standbyScreen.classList.add('standby-ignited');
     }
 
-    // 5. Cathode Ray Tube Beam Warm-up & Expansion
+    // 6. Cathode Ray Tube Beam Warm-up & Expansion
     const tvSet = document.getElementById('tv-set');
     const screenContent = document.getElementById('tv-screen-content');
 
@@ -243,7 +310,7 @@ class PortfolioApp {
       screenContent.classList.add('power-on');
     }
 
-    // 6. White noise static burst + channel 1 reveal
+    // 7. White noise static burst + channel 1 reveal
     setTimeout(() => {
       if (screenContent) screenContent.classList.remove('power-on');
       if (standbyScreen) standbyScreen.style.display = 'none';
@@ -256,13 +323,13 @@ class PortfolioApp {
         this.switchChannelDOM(1);
       });
 
-      // Remote infrared LED blinks with chime sound as it locks into position
+      // Remote infrared LED blinks with chime sound
       setTimeout(() => {
         if (this.remote) {
           this.remote.blinkIR();
           retroAudio.playBeep(1200);
         }
-      }, 350);
+      }, 300);
 
       // Green retro OSD notification
       tvEffects.showOSD('CH 01', 'ABOUT - PROFILE DOSSIER');

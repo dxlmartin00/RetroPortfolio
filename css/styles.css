@@ -112,15 +112,37 @@ html, body {
   background: var(--secondary-accent);
 }
 
-/* Page Layout Container */
+/* Scroll Runway for natural scroll experience */
+.scroll-runway {
+  height: 250vh;
+  width: 100%;
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+body.tv-is-powered-on {
+  overflow: hidden;
+}
+
+body.tv-is-powered-on .scroll-runway {
+  display: none;
+}
+
+/* Page Layout Container - Fixed in viewport so TV is always framed while scrolling */
 .portfolio-stage {
-  min-height: 100vh;
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 24px 20px;
-  position: relative;
+  padding: 20px;
   gap: 36px;
+  z-index: 10;
+  overflow: hidden;
 }
 
 /* VINTAGE TV SET CASING */
@@ -558,20 +580,50 @@ html, body {
   letter-spacing: 1px;
 }
 
-.standby-power-trigger-btn {
-  background: transparent;
-  border: none;
-  color: #717585;
-  font-family: var(--font-pixel);
-  font-size: 8px;
-  letter-spacing: 0.5px;
-  cursor: pointer;
-  margin-top: 2px;
-  transition: color 0.15s ease;
+/* Standby Progress Meter */
+.standby-progress-track {
+  width: 260px;
+  height: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(0, 255, 170, 0.35);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.8);
 }
 
-.standby-power-trigger-btn:hover {
-  color: #fff;
+.standby-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--secondary-accent), var(--primary-accent));
+  border-radius: 4px;
+  transition: width 0.08s linear;
+}
+
+.standby-progress-label {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: #8b949e;
+  letter-spacing: 1px;
+}
+
+/* Ready to Power On Callout Banner */
+.standby-ready-notice {
+  display: none;
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: #ff3b30;
+  background: rgba(255, 59, 48, 0.14);
+  border: 1px solid #ff3b30;
+  padding: 8px 14px;
+  border-radius: 6px;
+  animation: readyNoticePulse 1s infinite alternate;
+  box-shadow: 0 0 16px rgba(255, 59, 48, 0.5);
+  margin-top: 6px;
+}
+
+@keyframes readyNoticePulse {
+  0% { transform: scale(0.98); opacity: 0.85; }
+  100% { transform: scale(1.02); opacity: 1; }
 }
 
 /* PHYSICAL TV CONTROLS PANEL (Right Side of TV) */
@@ -942,5 +994,20 @@ html, body {
   .tv-brand-plate {
     left: 18px;
     font-size: 8px;
+  }
+}
+
+/* Height-based Scaling for smaller laptop displays */
+@media (max-height: 850px) and (min-width: 1101px) {
+  .portfolio-stage {
+    transform: scale(0.88);
+    transform-origin: center center;
+  }
+}
+
+@media (max-height: 720px) and (min-width: 1101px) {
+  .portfolio-stage {
+    transform: scale(0.78);
+    transform-origin: center center;
   }
 }

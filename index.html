@@ -22,8 +22,11 @@
 </head>
 <body>
 
-  <!-- Main Stage -->
-  <main class="portfolio-stage">
+  <!-- Scroll Runway for natural scroll experience -->
+  <div class="scroll-runway" id="scroll-runway"></div>
+
+  <!-- Main Stage (Fixed Viewport) -->
+  <main class="portfolio-stage" id="portfolio-stage">
 
     <!-- RETRO CRT TELEVISION CASING -->
     <div class="tv-casing-container">
@@ -57,14 +60,23 @@
                 </div>
                 <h1 class="standby-headline">LUIGIE MARTIN</h1>
                 <p class="standby-subhead">Computer Science Portfolio • 2026</p>
-                <div class="standby-scroll-prompt" title="Scroll down or click to turn on TV">
+                
+                <div class="standby-scroll-prompt" id="standby-scroll-status" title="Scroll down to summon remote">
                   <span class="prompt-arrow-anim">▼</span>
-                  <span class="prompt-main-text">SCROLL DOWN TO POWER ON</span>
+                  <span class="prompt-main-text" id="standby-prompt-text">SCROLL DOWN TO SUMMON REMOTE</span>
                   <span class="prompt-arrow-anim">▼</span>
                 </div>
-                <button class="standby-power-trigger-btn" id="standby-click-btn" title="Click or scroll to power on">
-                  <span>⏻ OR CLICK TO IGNITE CRT</span>
-                </button>
+
+                <!-- Progress Tracker for Remote Summon -->
+                <div class="standby-progress-track">
+                  <div class="standby-progress-fill" id="standby-progress-fill" style="width: 0%;"></div>
+                </div>
+                <div class="standby-progress-label" id="standby-progress-label">REMOTE PROXIMITY: 0%</div>
+
+                <!-- Ready to Power On Callout -->
+                <div class="standby-ready-notice" id="standby-ready-notice">
+                  <span>🔴 REMOTE REACHED! CLICK RED POWER BUTTON ON REMOTE TO TURN ON</span>
+                </div>
               </div>
             </div>
 
@@ -728,9 +740,12 @@
 
         <!-- TOP ROW: Power, Mute, Guide -->
         <div class="remote-top-row">
-          <button class="remote-btn-power" id="btn-power" title="TV Power On/Off">
-            ⏻
-          </button>
+          <div class="power-btn-wrapper" id="power-btn-wrapper">
+            <button class="remote-btn-power" id="btn-power" title="TV Power On/Off">
+              ⏻
+            </button>
+            <div class="power-glow-ripple"></div>
+          </div>
           <button class="remote-aux-btn" id="btn-mute" title="Mute/Unmute Audio">
             MUTE
           </button>

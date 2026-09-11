@@ -3,20 +3,17 @@
 .remote-wrapper {
   position: relative;
   z-index: 40;
+  will-change: transform, opacity;
   /* Initial off-screen state: positioned diagonally towards bottom-right */
-  transform: translate(160px, 340px) rotate(28deg) scale(0.85);
+  transform: translate3d(220px, 480px, 0) rotate(34deg) scale(0.8);
   opacity: 0;
   pointer-events: none;
-  transition: 
-    transform 1.25s cubic-bezier(0.16, 1, 0.3, 1),
-    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, opacity;
 }
 
-/* Diagonal smooth entrance when summoned */
+/* Settled docked state once powered on */
 .remote-wrapper.remote-summoned {
-  transform: translate(0, 0) rotate(0deg) scale(1);
-  opacity: 1;
+  transform: translate3d(0, 0, 0) rotate(0deg) scale(1) !important;
+  opacity: 1 !important;
   pointer-events: auto;
 }
 
@@ -115,6 +112,57 @@
   width: 100%;
   align-items: center;
   padding: 0 4px;
+}
+
+.power-btn-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.power-glow-ripple {
+  display: none;
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2px solid #ff3333;
+  pointer-events: none;
+}
+
+.power-btn-wrapper.pulsing .power-glow-ripple {
+  display: block;
+  animation: rippleRing 1.4s cubic-bezier(0.2, 0.8, 0.2, 1) infinite;
+}
+
+.power-btn-wrapper.pulsing .remote-btn-power {
+  animation: powerBtnPulse 1s infinite alternate ease-in-out;
+  box-shadow: 
+    0 0 16px #ff2222, 
+    0 0 32px rgba(255, 34, 34, 0.7),
+    0 4px 0 #5c0b0b;
+}
+
+@keyframes powerBtnPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 0 10px #ff2222, 0 4px 0 #5c0b0b;
+  }
+  100% {
+    transform: scale(1.08);
+    box-shadow: 0 0 24px #ff3333, 0 0 40px rgba(255, 34, 34, 0.8), 0 4px 0 #5c0b0b;
+  }
+}
+
+@keyframes rippleRing {
+  0% {
+    transform: scale(0.85);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
 }
 
 .remote-btn-power {

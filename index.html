@@ -35,8 +35,8 @@
         <div class="antenna-rod antenna-right"></div>
       </div>
 
-      <!-- TV Main Wooden & Metallic Chassis -->
-      <div class="tv-chassis" id="tv-set">
+      <!-- TV Main Wooden & Metallic Chassis (Initially Shut-Off) -->
+      <div class="tv-chassis tv-turned-off" id="tv-set">
         
         <!-- Brand Plate -->
         <div class="tv-brand-plate">DXL-VISION • CRT 2026</div>
@@ -46,6 +46,27 @@
 
           <!-- Curved CRT Viewport -->
           <div class="tv-screen-viewport" id="tv-screen-viewport">
+
+            <!-- CRT Standby Screen (Initial Shut-Off State) -->
+            <div class="tv-standby-screen" id="tv-standby-screen">
+              <div class="standby-content">
+                <div class="standby-radar-pulse"></div>
+                <div class="standby-signal-badge">
+                  <span class="standby-dot"></span>
+                  <span class="standby-dot-text">CRT STANDBY // DXL-VISION</span>
+                </div>
+                <h1 class="standby-headline">LUIGIE MARTIN</h1>
+                <p class="standby-subhead">Computer Science Portfolio • 2026</p>
+                <div class="standby-scroll-prompt" title="Scroll down or click to turn on TV">
+                  <span class="prompt-arrow-anim">▼</span>
+                  <span class="prompt-main-text">SCROLL DOWN TO POWER ON</span>
+                  <span class="prompt-arrow-anim">▼</span>
+                </div>
+                <button class="standby-power-trigger-btn" id="standby-click-btn" title="Click or scroll to power on">
+                  <span>⏻ OR CLICK TO IGNITE CRT</span>
+                </button>
+              </div>
+            </div>
 
             <!-- CRT Shaders & Scanlines Layer -->
             <div class="crt-scanlines"></div>

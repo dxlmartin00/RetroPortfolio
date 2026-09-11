@@ -3,6 +3,38 @@
 .remote-wrapper {
   position: relative;
   z-index: 40;
+  /* Initial off-screen state: positioned diagonally towards bottom-right */
+  transform: translate(160px, 340px) rotate(28deg) scale(0.85);
+  opacity: 0;
+  pointer-events: none;
+  transition: 
+    transform 1.25s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+}
+
+/* Diagonal smooth entrance when summoned */
+.remote-wrapper.remote-summoned {
+  transform: translate(0, 0) rotate(0deg) scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Subtle floating idle motion once settled */
+.remote-wrapper.remote-summoned .remote-body {
+  animation: remoteFloatIdle 6s ease-in-out infinite alternate;
+}
+
+@keyframes remoteFloatIdle {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
 }
 
 /* Remote Body Chassis */
@@ -413,18 +445,39 @@
 @media (max-width: 1100px) {
   .remote-wrapper {
     position: fixed;
-    bottom: -600px;
+    bottom: -620px;
     right: 20px;
     z-index: 60;
-    transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+    transform: translate(140px, 260px) rotate(28deg) scale(0.8);
+    opacity: 0;
+    transition: 
+      bottom 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.15),
+      transform 1.15s cubic-bezier(0.16, 1, 0.3, 1),
+      opacity 0.75s ease;
+  }
+
+  .remote-wrapper.remote-summoned {
+    transform: translate(0, 0) rotate(0deg) scale(0.92);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .remote-wrapper.drawer-open {
-    bottom: 20px;
+    bottom: 20px !important;
   }
 
   .mobile-remote-pill {
     display: flex;
+    transform: translateY(100px) scale(0.8);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+  }
+
+  .mobile-remote-pill.pill-visible {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    pointer-events: auto;
   }
 
   .remote-close-row {

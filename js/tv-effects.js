@@ -8,7 +8,7 @@ class TVEffectsManager {
     this.isStaticActive = false;
     this.osdElement = null;
     this.osdTimeout = null;
-    this.isPowerOn = true;
+    this.isPowerOn = false; // Start initially powered off!
     this.currentTheme = 'cyberpunk'; // 'cyberpunk', 'amber', 'matrix', 'classic-bw'
   }
 
@@ -161,6 +161,7 @@ class TVEffectsManager {
   togglePower(onCallback, offCallback) {
     const screenFrame = document.getElementById('tv-screen-content');
     const tvSet = document.getElementById('tv-set');
+    const standbyScreen = document.getElementById('tv-standby-screen');
 
     this.isPowerOn = !this.isPowerOn;
 
@@ -171,6 +172,7 @@ class TVEffectsManager {
         screenFrame.classList.add('power-on');
       }
       if (tvSet) tvSet.classList.remove('tv-turned-off');
+      if (standbyScreen) standbyScreen.style.display = 'none';
 
       retroAudio.playPower(true);
 
@@ -194,6 +196,10 @@ class TVEffectsManager {
       if (this.osdElement) this.osdElement.classList.remove('active');
 
       setTimeout(() => {
+        if (standbyScreen) {
+          standbyScreen.style.display = 'flex';
+          standbyScreen.classList.remove('standby-ignited');
+        }
         if (offCallback) offCallback();
       }, 450);
     }

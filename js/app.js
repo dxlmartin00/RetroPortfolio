@@ -4,7 +4,8 @@ class PortfolioApp {
   constructor() {
     this.currentChannel = 1;
     this.totalChannels = 6;
-    this.isPowerOn = true;
+    this.isPowerOn = false; // Starts completely shut-off!
+    this.hasIgnited = false; // Tracks first scroll/interaction ignition
     this.volume = 60;
     this.isMuted = false;
     this.activeFilter = 'all';
@@ -35,7 +36,7 @@ class PortfolioApp {
     // Bind physical TV buttons & dials
     this.bindPhysicalTVControls();
 
-    // Bind Mouse Wheel / Touch Scrolling for channel surfing
+    // Bind Mouse Wheel / Touch Scrolling for channel surfing (active once ignited)
     this.bindScrollAndTouch();
 
     // Bind Contact Form
@@ -44,19 +45,8 @@ class PortfolioApp {
     // Bind TV Guide Modal
     this.renderGuideSchedule();
 
-    // Show initial Channel 1
-    this.tuneChannel(1, false);
-
-    // Prompt audio unlock on first user gesture
-    const unlockAudio = () => {
-      retroAudio.init();
-      window.removeEventListener('click', unlockAudio);
-      window.removeEventListener('keydown', unlockAudio);
-      window.removeEventListener('touchstart', unlockAudio);
-    };
-    window.addEventListener('click', unlockAudio);
-    window.addEventListener('keydown', unlockAudio);
-    window.addEventListener('touchstart', unlockAudio);
+    // Listen for the first scroll/interaction to summon remote & ignite TV!
+    this.setupIgnitionListeners();
   }
 
   // Tune to a specific channel (1 - 6)
@@ -153,7 +143,146 @@ class PortfolioApp {
     tvEffects.showVolumeOSD(this.volume, this.isMuted);
   }
 
+  // Setup listeners for the initial scroll/click to power on TV and summon remote
+  setupIgnitionListeners() {
+    const triggerIgnition = (e) => {
+      if (this.hasIgnited) return;
+      if (e && e.cancelable) e.preventDefault();
+      this.igniteExperience();
+    };
+
+    // Scroll (mouse wheel / trackpad) anywhere on window
+    const onWheelIgnite = (e) => {
+      if (this.hasIgnited) return;
+      if (Math.abs(e.deltaY) > 5 || Math.abs(e.deltaX) > 5) {
+        if (e.cancelable) e.preventDefault();
+        triggerIgnition(e);
+      }
+    };
+    window.addEventListener('wheel', onWheelIgnite, { passive: false });
+
+    // Touch drag / swipe on mobile
+    let touchStartY = 0;
+    const onTouchStartIgnite = (e) => {
+      touchStartY = e.touches[0].clientY;
+    };
+    const onTouchMoveIgnite = (e) => {
+      if (this.hasIgnited) return;
+      const touchEndY = e.touches[0].clientY;
+      if (Math.abs(touchStartY - touchEndY) > 15) {
+        if (e.cancelable) e.preventDefault();
+        triggerIgnition(e);
+      }
+    };
+    window.addEventListener('touchstart', onTouchStartIgnite, { passive: true });
+    window.addEventListener('touchmove', onTouchMoveIgnite, { passive: false });
+
+    // Click on standby screen elements
+    const standbyScreen = document.getElementById('tv-standby-screen');
+    const standbyBtn = document.getElementById('standby-click-btn');
+    const standbyPrompt = document.querySelector('.standby-scroll-prompt');
+
+    if (standbyBtn) standbyBtn.addEventListener('click', triggerIgnition);
+    if (standbyPrompt) standbyPrompt.addEventListener('click', triggerIgnition);
+    if (standbyScreen) standbyScreen.addEventListener('click', triggerIgnition);
+
+    // Keyboard trigger (ArrowDown, Space, Enter, PageDown)
+    const onKeyIgnite = (e) => {
+      if (this.hasIgnited) return;
+      if (['ArrowDown', 'ArrowUp', ' ', 'Enter', 'PageDown', '1'].includes(e.key)) {
+        if (e.cancelable) e.preventDefault();
+        triggerIgnition(e);
+      }
+    };
+    window.addEventListener('keydown', onKeyIgnite);
+
+    this.cleanupIgnition = () => {
+      window.removeEventListener('wheel', onWheelIgnite);
+      window.removeEventListener('touchstart', onTouchStartIgnite);
+      window.removeEventListener('touchmove', onTouchMoveIgnite);
+      window.removeEventListener('keydown', onKeyIgnite);
+    };
+  }
+
+  // Smooth diagonal entrance for remote & cinematic CRT TV ignition
+  igniteExperience() {
+    if (this.hasIgnited) return;
+    this.hasIgnited = true;
+    if (this.cleanupIgnition) this.cleanupIgnition();
+
+    // 1. Initialize procedural Web Audio on this user gesture
+    retroAudio.init();
+
+    // 2. Summon remote control diagonally from bottom-right!
+    const remoteEl = document.getElementById('remote-control');
+    if (remoteEl) {
+      remoteEl.classList.add('remote-summoned');
+    }
+
+    const mobilePill = document.getElementById('mobile-remote-toggle');
+    if (mobilePill) {
+      mobilePill.classList.add('pill-visible');
+    }
+
+    // 3. Play CRT power-up whine & degauss sound
+    retroAudio.playPower(true);
+
+    // 4. Glitch & Fade out Standby screen
+    const standbyScreen = document.getElementById('tv-standby-screen');
+    if (standbyScreen) {
+      standbyScreen.classList.add('standby-ignited');
+    }
+
+    // 5. Cathode Ray Tube Beam Warm-up & Expansion
+    const tvSet = document.getElementById('tv-set');
+    const screenContent = document.getElementById('tv-screen-content');
+
+    if (tvSet) tvSet.classList.remove('tv-turned-off');
+    if (screenContent) {
+      screenContent.classList.remove('power-off');
+      screenContent.classList.add('power-on');
+    }
+
+    // 6. White noise static burst + channel 1 reveal
+    setTimeout(() => {
+      if (screenContent) screenContent.classList.remove('power-on');
+      if (standbyScreen) standbyScreen.style.display = 'none';
+
+      this.isPowerOn = true;
+      tvEffects.isPowerOn = true;
+
+      // Trigger static burst and reveal Channel 1
+      tvEffects.triggerStaticBurst(280, () => {
+        this.switchChannelDOM(1);
+      });
+
+      // Remote infrared LED blinks with chime sound as it locks into position
+      setTimeout(() => {
+        if (this.remote) {
+          this.remote.blinkIR();
+          retroAudio.playBeep(1200);
+        }
+      }, 350);
+
+      // Green retro OSD notification
+      tvEffects.showOSD('CH 01', 'ABOUT - PROFILE DOSSIER');
+
+      // Rotate channel tuner dial & highlight remote button
+      this.rotateChannelKnob(1);
+      this.updateRemoteActiveIndicator(1);
+    }, 420);
+  }
+
   togglePower() {
+    if (!this.hasIgnited) {
+      this.igniteExperience();
+      return;
+    }
+
+    // Ensure remote stays summoned
+    const remoteEl = document.getElementById('remote-control');
+    if (remoteEl) remoteEl.classList.add('remote-summoned');
+
     this.isPowerOn = tvEffects.togglePower(
       () => {
         // When turned ON

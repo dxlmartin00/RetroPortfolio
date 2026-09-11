@@ -30,7 +30,8 @@ class RemoteController {
     // POWER Button
     const powerBtn = document.getElementById('btn-power');
     if (powerBtn) {
-      powerBtn.addEventListener('click', () => {
+      powerBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         this.app.togglePower();
       });
@@ -40,11 +41,16 @@ class RemoteController {
     const numButtons = document.querySelectorAll('.remote-num-btn');
     numButtons.forEach((btn) => {
       btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         const channelNum = parseInt(btn.dataset.channel, 10);
         if (!isNaN(channelNum)) {
           this.blinkIR();
           retroAudio.playClick();
-          this.app.tuneChannel(channelNum);
+          if (!this.app.isPowerOn) {
+            this.app.igniteToChannel(channelNum);
+          } else {
+            this.app.tuneChannel(channelNum);
+          }
         }
       });
     });
@@ -53,17 +59,27 @@ class RemoteController {
     const chUpBtn = document.getElementById('btn-ch-up');
     const chDownBtn = document.getElementById('btn-ch-down');
     if (chUpBtn) {
-      chUpBtn.addEventListener('click', () => {
+      chUpBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.channelUp();
+        if (!this.app.isPowerOn) {
+          this.app.igniteToChannel(1);
+        } else {
+          this.app.channelUp();
+        }
       });
     }
     if (chDownBtn) {
-      chDownBtn.addEventListener('click', () => {
+      chDownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.channelDown();
+        if (!this.app.isPowerOn) {
+          this.app.igniteToChannel(1);
+        } else {
+          this.app.channelDown();
+        }
       });
     }
 

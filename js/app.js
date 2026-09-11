@@ -149,8 +149,6 @@ class PortfolioApp {
     this.targetScrollProgress = 0;
 
     const onWindowScroll = () => {
-      if (this.hasIgnited) return;
-
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       const currentY = window.scrollY;
       this.targetScrollProgress = Math.max(0, Math.min(1, currentY / maxScroll));
@@ -160,8 +158,6 @@ class PortfolioApp {
 
     // Smooth RAF loop for interpolation (gives physical weighted glide to the remote)
     const renderLoop = () => {
-      if (this.hasIgnited) return;
-
       // Smooth interpolation
       const diff = this.targetScrollProgress - this.scrollProgress;
       this.scrollProgress += diff * 0.12;
@@ -179,21 +175,13 @@ class PortfolioApp {
     // Initial positioning
     this.updateRemoteScrollPosition(0);
 
-    // Manual click on the standby click button (if someone clicks early)
-    const standbyBtn = document.getElementById('standby-click-btn');
-    if (standbyBtn) {
-      standbyBtn.addEventListener('click', () => {
-        this.targetScrollProgress = 1;
-        this.scrollProgress = 1;
-        this.updateRemoteScrollPosition(1);
-        this.updateStandbyProgress(1);
-        this.igniteExperience();
+    // Manual click on the standby power hint
+    const standbyHint = document.getElementById('standby-power-hint');
+    if (standbyHint) {
+      standbyHint.addEventListener('click', () => {
+        this.igniteExperience(1);
       });
     }
-
-    this.cleanupIgnition = () => {
-      window.removeEventListener('scroll', onWindowScroll);
-    };
   }
 
   // Updates the remote's diagonal position based on scroll progress (0.0 to 1.0)
@@ -201,106 +189,66 @@ class PortfolioApp {
     const remoteEl = document.getElementById('remote-control');
     if (!remoteEl) return;
 
-    // Slower, smooth diagonal trajectory:
-    // At 0%: off-screen at bottom right
-    // At 100%: perfectly docked
+    // Smooth diagonal trajectory:
+    // At 0%: Resting in bottom-right corner, visible & clickable, tilted forward
+    // At 100%: Docked near TV center
     const inv = 1 - progress;
-    const tx = inv * 260;
-    const ty = inv * 560;
-    const rot = inv * 36;
-    const scale = 0.75 + progress * 0.25;
-    const opacity = Math.min(1, progress * 1.6);
+    const tx = inv * 180;
+    const ty = inv * 360;
+    const rotZ = inv * 18;
+    const scale = 0.88 + progress * 0.12;
 
-    remoteEl.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) rotate(${rot.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
-    remoteEl.style.opacity = opacity.toFixed(2);
+    remoteEl.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) rotateZ(${rotZ.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
+    remoteEl.style.opacity = '1';
+    remoteEl.style.pointerEvents = 'auto';
 
-    // Power button pulsating ring once remote is in reach (at bottom of scroll)
+    // Power button pulsating ring to guide user when TV is off
     const powerBtnWrapper = document.getElementById('power-btn-wrapper');
     if (powerBtnWrapper) {
-      if (progress >= 0.90) {
+      if (!this.isPowerOn) {
         powerBtnWrapper.classList.add('pulsing');
-        remoteEl.style.pointerEvents = 'auto';
       } else {
         powerBtnWrapper.classList.remove('pulsing');
-        remoteEl.style.pointerEvents = 'none';
       }
     }
 
     // Mobile floating pill
     const mobilePill = document.getElementById('mobile-remote-toggle');
     if (mobilePill) {
-      if (progress >= 0.85) {
-        mobilePill.classList.add('pill-visible');
+      mobilePill.classList.add('pill-visible');
+    }
+  }
+
+  // Updates the CRT Standby screen text
+  updateStandbyProgress(progress) {
+    const promptText = document.getElementById('standby-prompt-text');
+    if (promptText) {
+      if (progress >= 0.75) {
+        promptText.textContent = 'PRESS ⏻ POWER BUTTON';
       } else {
-        mobilePill.classList.remove('pill-visible');
+        promptText.textContent = 'PRESS POWER OR SCROLL';
       }
     }
   }
 
-  // Updates the CRT Standby screen text & progress bar
-  updateStandbyProgress(progress) {
-    const percent = Math.round(progress * 100);
-    const fillEl = document.getElementById('standby-progress-fill');
-    const labelEl = document.getElementById('standby-progress-label');
-    const promptText = document.getElementById('standby-prompt-text');
-    const readyNotice = document.getElementById('standby-ready-notice');
-
-    if (fillEl) fillEl.style.width = `${percent}%`;
-    if (labelEl) labelEl.textContent = `REMOTE PROXIMITY: ${percent}%`;
-
-    if (progress >= 0.90) {
-      if (promptText) promptText.textContent = 'REMOTE REACHED! CLICK RED POWER BUTTON ⏻';
-      if (readyNotice) readyNotice.style.display = 'block';
-    } else if (progress > 0.45) {
-      if (promptText) promptText.textContent = 'KEEP SCROLLING... RETRIEVING REMOTE';
-      if (readyNotice) readyNotice.style.display = 'none';
-    } else {
-      if (promptText) promptText.textContent = 'SCROLL DOWN TO SUMMON REMOTE';
-      if (readyNotice) readyNotice.style.display = 'none';
-    }
-  }
-
-  // Ignites the TV ONLY when the user clicks the power button manually!
-  igniteExperience() {
-    if (this.hasIgnited) return;
+  // Ignites the TV when the user clicks power or any channel button
+  igniteExperience(targetChannel = 1) {
+    if (this.isPowerOn) return;
     this.hasIgnited = true;
-    if (this.cleanupIgnition) this.cleanupIgnition();
 
     // 1. Initialize procedural Web Audio on this user click
     retroAudio.init();
 
-    // 2. Lock page runway so screen remains pinned for TV channel surfing
-    document.body.classList.add('tv-is-powered-on');
-    window.scrollTo(0, 0);
-
-    // 3. Ensure remote is fully docked and locked
-    const remoteEl = document.getElementById('remote-control');
-    if (remoteEl) {
-      remoteEl.style.transform = '';
-      remoteEl.style.opacity = '';
-      remoteEl.classList.add('remote-summoned');
-    }
-
-    const powerBtnWrapper = document.getElementById('power-btn-wrapper');
-    if (powerBtnWrapper) {
-      powerBtnWrapper.classList.remove('pulsing');
-    }
-
-    const mobilePill = document.getElementById('mobile-remote-toggle');
-    if (mobilePill) {
-      mobilePill.classList.add('pill-visible');
-    }
-
-    // 4. Play CRT power-up whine & degauss sound
+    // 2. Play CRT power-up whine & degauss sound
     retroAudio.playPower(true);
 
-    // 5. Glitch & Fade out Standby screen
+    // 3. Glitch & Fade out Standby screen
     const standbyScreen = document.getElementById('tv-standby-screen');
     if (standbyScreen) {
       standbyScreen.classList.add('standby-ignited');
     }
 
-    // 6. Cathode Ray Tube Beam Warm-up & Expansion
+    // 4. Cathode Ray Tube Beam Warm-up & Expansion
     const tvSet = document.getElementById('tv-set');
     const screenContent = document.getElementById('tv-screen-content');
 
@@ -310,7 +258,7 @@ class PortfolioApp {
       screenContent.classList.add('power-on');
     }
 
-    // 7. White noise static burst + channel 1 reveal
+    // 5. White noise static burst + target channel reveal
     setTimeout(() => {
       if (screenContent) screenContent.classList.remove('power-on');
       if (standbyScreen) standbyScreen.style.display = 'none';
@@ -318,9 +266,9 @@ class PortfolioApp {
       this.isPowerOn = true;
       tvEffects.isPowerOn = true;
 
-      // Trigger static burst and reveal Channel 1
+      // Trigger static burst and reveal target channel
       tvEffects.triggerStaticBurst(280, () => {
-        this.switchChannelDOM(1);
+        this.switchChannelDOM(targetChannel);
       });
 
       // Remote infrared LED blinks with chime sound
@@ -332,23 +280,30 @@ class PortfolioApp {
       }, 300);
 
       // Green retro OSD notification
-      tvEffects.showOSD('CH 01', 'ABOUT - PROFILE DOSSIER');
+      const ch = this.channels.find(c => c.id === targetChannel) || this.channels[0];
+      tvEffects.showOSD(`CH 0${targetChannel}`, `${ch.name} - ${ch.tag}`);
 
       // Rotate channel tuner dial & highlight remote button
-      this.rotateChannelKnob(1);
-      this.updateRemoteActiveIndicator(1);
+      this.rotateChannelKnob(targetChannel);
+      this.updateRemoteActiveIndicator(targetChannel);
+
+      // Update power button glow state
+      const powerBtnWrapper = document.getElementById('power-btn-wrapper');
+      if (powerBtnWrapper) powerBtnWrapper.classList.remove('pulsing');
     }, 420);
   }
 
+  // Direct power-on to a specific channel
+  igniteToChannel(channelNum) {
+    this.currentChannel = channelNum;
+    this.igniteExperience(channelNum);
+  }
+
   togglePower() {
-    if (!this.hasIgnited) {
-      this.igniteExperience();
+    if (!this.isPowerOn) {
+      this.igniteExperience(this.currentChannel || 1);
       return;
     }
-
-    // Ensure remote stays summoned
-    const remoteEl = document.getElementById('remote-control');
-    if (remoteEl) remoteEl.classList.add('remote-summoned');
 
     this.isPowerOn = tvEffects.togglePower(
       () => {
@@ -360,6 +315,9 @@ class PortfolioApp {
         if (this.currentChannel === 6) {
           crtArcade.stop();
         }
+        const powerBtnWrapper = document.getElementById('power-btn-wrapper');
+        if (powerBtnWrapper) powerBtnWrapper.classList.add('pulsing');
+        this.updateStandbyProgress(this.scrollProgress);
       }
     );
   }

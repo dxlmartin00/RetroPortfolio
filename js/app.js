@@ -161,6 +161,7 @@ class PortfolioApp {
   setupIgnitionListeners() {
     this.scrollProgress = 0;
     this.targetScrollProgress = 0;
+    let lastRendered = -1;
 
     const onWindowScroll = () => {
       const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
@@ -172,15 +173,20 @@ class PortfolioApp {
 
     // Smooth RAF loop for interpolation (gives physical weighted glide to the remote)
     const renderLoop = () => {
-      // Smooth interpolation
       const diff = this.targetScrollProgress - this.scrollProgress;
-      this.scrollProgress += diff * 0.12;
-      if (Math.abs(diff) < 0.0005) {
-        this.scrollProgress = this.targetScrollProgress;
+      if (Math.abs(diff) > 0.0002) {
+        this.scrollProgress += diff * 0.12;
+        if (Math.abs(this.targetScrollProgress - this.scrollProgress) < 0.0005) {
+          this.scrollProgress = this.targetScrollProgress;
+        }
       }
 
-      this.updateRemoteScrollPosition(this.scrollProgress);
-      this.updateStandbyProgress(this.scrollProgress);
+      // Only update DOM styles when the value actually changed to prevent click suppression
+      if (Math.abs(this.scrollProgress - lastRendered) > 0.0004) {
+        lastRendered = this.scrollProgress;
+        this.updateRemoteScrollPosition(this.scrollProgress);
+        this.updateStandbyProgress(this.scrollProgress);
+      }
 
       requestAnimationFrame(renderLoop);
     };
@@ -203,18 +209,20 @@ class PortfolioApp {
     const remoteEl = document.getElementById('remote-control');
     if (!remoteEl) return;
 
-    // Smooth diagonal trajectory:
-    // At 0%: Resting in bottom-right corner, visible & clickable, tilted forward
-    // At 100%: Docked near TV center
+    if (window.innerWidth <= 1100) {
+      remoteEl.style.transform = '';
+      return;
+    }
+
+    // Smooth diagonal trajectory keeping ALL buttons in comfortable view:
     const inv = 1 - progress;
-    const tx = inv * 180;
-    const ty = inv * 360;
-    const rotZ = inv * 18;
-    const scale = 0.88 + progress * 0.12;
+    const tx = inv * 60;
+    const ty = inv * 100;
+    const rotZ = inv * 8;
+    const scale = 0.94 + progress * 0.06;
 
     remoteEl.style.transform = `translate3d(${tx.toFixed(1)}px, ${ty.toFixed(1)}px, 0) rotateZ(${rotZ.toFixed(1)}deg) scale(${scale.toFixed(2)})`;
     remoteEl.style.opacity = '1';
-    remoteEl.style.pointerEvents = 'auto';
 
     // Power button pulsating ring to guide user when TV is off
     const powerBtnWrapper = document.getElementById('power-btn-wrapper');
@@ -248,7 +256,9 @@ class PortfolioApp {
   // Ignites the TV when the user clicks power or any channel button
   igniteExperience(targetChannel = 1) {
     if (this.isPowerOn) return;
+    this.isPowerOn = true;
     this.hasIgnited = true;
+    tvEffects.isPowerOn = true;
 
     // 1. Initialize procedural Web Audio on this user click
     retroAudio.init();
@@ -276,9 +286,6 @@ class PortfolioApp {
     setTimeout(() => {
       if (screenContent) screenContent.classList.remove('power-on');
       if (standbyScreen) standbyScreen.style.display = 'none';
-
-      this.isPowerOn = true;
-      tvEffects.isPowerOn = true;
 
       // Trigger static burst and reveal target channel
       tvEffects.triggerStaticBurst(280, () => {

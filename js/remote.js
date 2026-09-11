@@ -89,20 +89,32 @@ class RemoteController {
     const muteBtn = document.getElementById('btn-mute');
 
     if (volUpBtn) {
-      volUpBtn.addEventListener('click', () => {
+      volUpBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+        }
         this.app.volumeUp();
       });
     }
     if (volDownBtn) {
-      volDownBtn.addEventListener('click', () => {
+      volDownBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+        }
         this.app.volumeDown();
       });
     }
     if (muteBtn) {
-      muteBtn.addEventListener('click', () => {
+      muteBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+        }
         this.app.toggleMute();
       });
     }
@@ -110,21 +122,31 @@ class RemoteController {
     // GUIDE / MENU Button
     const guideBtn = document.getElementById('btn-guide');
     if (guideBtn) {
-      guideBtn.addEventListener('click', () => {
+      guideBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.toggleGuideModal();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          setTimeout(() => this.app.toggleGuideModal(true), 450);
+        } else {
+          this.app.toggleGuideModal();
+        }
       });
     }
 
     // Color Buttons (Themes)
     const colorButtons = document.querySelectorAll('.remote-color-btn');
     colorButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
         const theme = btn.dataset.theme;
         if (theme) {
+          if (!this.app.isPowerOn) {
+            this.app.igniteExperience();
+          }
           tvEffects.applyTheme(theme);
         }
       });
@@ -138,46 +160,91 @@ class RemoteController {
     const dpadOk = document.getElementById('dpad-ok');
 
     if (dpadUp) {
-      dpadUp.addEventListener('click', () => {
+      dpadUp.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          return;
+        }
         if (this.app.currentChannel === 6) {
           crtArcade.movePlayer('up');
         } else {
-          this.app.scrollActiveChannel(-120);
+          this.app.scrollActiveChannel(-140);
         }
       });
     }
     if (dpadDown) {
-      dpadDown.addEventListener('click', () => {
+      dpadDown.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          return;
+        }
         if (this.app.currentChannel === 6) {
           crtArcade.movePlayer('down');
         } else {
-          this.app.scrollActiveChannel(120);
+          this.app.scrollActiveChannel(140);
         }
       });
     }
     if (dpadLeft) {
-      dpadLeft.addEventListener('click', () => {
+      dpadLeft.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.navigateCards(-1);
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          return;
+        }
+        if (this.app.currentChannel === 2) {
+          this.app.navigateCards(-1);
+        } else {
+          this.app.channelDown();
+        }
       });
     }
     if (dpadRight) {
-      dpadRight.addEventListener('click', () => {
+      dpadRight.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.navigateCards(1);
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          return;
+        }
+        if (this.app.currentChannel === 2) {
+          this.app.navigateCards(1);
+        } else {
+          this.app.channelUp();
+        }
       });
     }
     if (dpadOk) {
-      dpadOk.addEventListener('click', () => {
+      dpadOk.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.blinkIR();
         retroAudio.playClick();
-        this.app.activateCardAction();
+        if (!this.app.isPowerOn) {
+          this.app.igniteExperience();
+          return;
+        }
+        const guideModal = document.getElementById('tv-guide-modal');
+        if (guideModal && guideModal.classList.contains('open')) {
+          this.app.toggleGuideModal(false);
+          return;
+        }
+        if (this.app.currentChannel === 2) {
+          this.app.activateCardAction();
+        } else if (this.app.currentChannel === 6) {
+          crtArcade.start();
+        } else {
+          retroAudio.playBeep(960);
+          tvEffects.showOSD(`CH 0${this.app.currentChannel}`, 'SELECT / OK');
+        }
       });
     }
   }

@@ -214,10 +214,17 @@ class TVEffectsManager {
 
     this.currentTheme = themeName;
     const tvSet = document.getElementById('tv-set');
-    if (!tvSet) return;
+    const body = document.body;
 
-    validThemes.forEach(t => tvSet.classList.remove(`theme-${t}`));
-    tvSet.classList.add(`theme-${themeName}`);
+    validThemes.forEach(t => {
+      if (tvSet) tvSet.classList.remove(`theme-${t}`);
+      if (body) body.classList.remove(`theme-${t}`);
+    });
+
+    if (themeName !== 'cyberpunk') {
+      if (tvSet) tvSet.classList.add(`theme-${themeName}`);
+      if (body) body.classList.add(`theme-${themeName}`);
+    }
 
     const themeLabels = {
       'cyberpunk': 'RGB MULTI-PHOSPHOR',

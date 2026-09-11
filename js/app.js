@@ -113,16 +113,26 @@ class PortfolioApp {
   }
 
   channelUp() {
+    if (!this.isPowerOn) {
+      this.igniteToChannel(1);
+      return;
+    }
     this.tuneChannel(this.currentChannel + 1);
   }
 
   channelDown() {
+    if (!this.isPowerOn) {
+      this.igniteToChannel(this.totalChannels);
+      return;
+    }
     this.tuneChannel(this.currentChannel - 1);
   }
 
   // Volume controls
   volumeUp() {
-    if (!this.isPowerOn) return;
+    if (!this.isPowerOn) {
+      this.igniteExperience();
+    }
     this.volume = Math.min(100, this.volume + 10);
     this.isMuted = false;
     retroAudio.setMuted(false);
@@ -131,14 +141,18 @@ class PortfolioApp {
   }
 
   volumeDown() {
-    if (!this.isPowerOn) return;
+    if (!this.isPowerOn) {
+      this.igniteExperience();
+    }
     this.volume = Math.max(0, this.volume - 10);
     retroAudio.setVolume(this.volume / 100);
     tvEffects.showVolumeOSD(this.volume, this.volume === 0);
   }
 
   toggleMute() {
-    if (!this.isPowerOn) return;
+    if (!this.isPowerOn) {
+      this.igniteExperience();
+    }
     this.isMuted = retroAudio.toggleMute();
     tvEffects.showVolumeOSD(this.volume, this.isMuted);
   }
@@ -398,31 +412,49 @@ class PortfolioApp {
     const physicalChDown = document.getElementById('tv-knob-ch-down');
     const physicalVolUp = document.getElementById('tv-knob-vol-up');
     const physicalVolDown = document.getElementById('tv-knob-vol-down');
+    const rotaryKnob = document.getElementById('tv-rotary-dial');
+
+    if (rotaryKnob) {
+      rotaryKnob.addEventListener('click', (e) => {
+        e.stopPropagation();
+        retroAudio.playClick();
+        if (!this.isPowerOn) {
+          this.igniteToChannel(1);
+        } else {
+          this.channelUp();
+        }
+      });
+    }
 
     if (physicalPower) {
-      physicalPower.addEventListener('click', () => {
+      physicalPower.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.togglePower();
       });
     }
     if (physicalChUp) {
-      physicalChUp.addEventListener('click', () => {
+      physicalChUp.addEventListener('click', (e) => {
+        e.stopPropagation();
         retroAudio.playClick();
         this.channelUp();
       });
     }
     if (physicalChDown) {
-      physicalChDown.addEventListener('click', () => {
+      physicalChDown.addEventListener('click', (e) => {
+        e.stopPropagation();
         retroAudio.playClick();
         this.channelDown();
       });
     }
     if (physicalVolUp) {
-      physicalVolUp.addEventListener('click', () => {
+      physicalVolUp.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.volumeUp();
       });
     }
     if (physicalVolDown) {
-      physicalVolDown.addEventListener('click', () => {
+      physicalVolDown.addEventListener('click', (e) => {
+        e.stopPropagation();
         this.volumeDown();
       });
     }
